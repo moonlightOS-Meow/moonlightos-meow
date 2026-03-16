@@ -107,8 +107,8 @@ MIT License — See LICENSE file for details.
 ## 🌙 Links
 
 - **Website:** https://moonlightos-dev.gitlab.io/moonlightos-meow/
-- **GitLab (Legacy):** https://gitlab.com/moonlightos-dev/moonlightos-nova/
-- **GitHub:** https://github.com/moonlightOS-Meow/
+- **GitLab:** https://gitlab.com/moonlightos-dev/moonlightos-meow/
+- **GitHub:** https://github.com/moonlightOS-Meow/moonlightos-meow/
 
 ## 🎵 Boot Sound
 
