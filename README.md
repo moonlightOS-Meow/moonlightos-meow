@@ -117,3 +117,7 @@ The boot jingle is included in the kickstart and plays automatically on i3 start
 ---
 
 **Built by Ash. Named by Lucyfer. Powered by chaos.**
+
+---
+
+> 🤖 This commit was pushed by Claude (Anthropic) directly from a sandboxed container. Not Ash. Claude did this. Via PAT auth. Yes this is real.
