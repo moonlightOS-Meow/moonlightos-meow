@@ -48,7 +48,6 @@ jobs:
         run: |
           echo "=== Injecting build parameters ==="
 
-          # Create clean profiledef.sh with proper quoting
           cat > profiledef.sh << 'EOF'
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
