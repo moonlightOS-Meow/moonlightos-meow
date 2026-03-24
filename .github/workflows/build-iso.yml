@@ -1,0 +1,88 @@
+name: Build moonlightOS Meow ISO
+
+on:
+  workflow_dispatch:
+    inputs:
+      iso_version:
+        description: 'ISO version string'
+        required: true
+        default: '5.0'
+      extra_packages:
+        description: 'Extra packages to add (space-separated)'
+        required: false
+        default: ''
+      compression:
+        description: 'Squashfs compression'
+        required: true
+        default: 'xz'
+        type: choice
+        options:
+          - xz
+          - zstd
+          - lz4
+      upload_artifact:
+        description: 'Upload ISO as artifact'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: v5.0-meow
+
+      - name: Install dependencies
+        run: |
+          pacman -Syu --noconfirm
+          pacman -S --noconfirm archiso git sudo squashfs-tools
+
+      - name: Inject build inputs into profiledef.sh
+        run: |
+          sed -i "s/^iso_version=.*/iso_version=\"${{ github.event.inputs.iso_version }}\"/" profiledef.sh
+          echo "✅ iso_version set to ${{ github.event.inputs.iso_version }}"
+
+      - name: Set squashfs compression
+        run: |
+          COMP="${{ github.event.inputs.compression }}"
+          if [ "$COMP" = "zstd" ]; then
+            sed -i "s/airootfs_image_tool_options=.*/airootfs_image_tool_options=('-comp' 'zstd' '-Xcompression-level' '19' '-b' '1M')/" profiledef.sh
+          elif [ "$COMP" = "lz4" ]; then
+            sed -i "s/airootfs_image_tool_options=.*/airootfs_image_tool_options=('-comp' 'lz4' '-b' '1M')/" profiledef.sh
+          fi
+          echo "✅ Compression set to $COMP"
+
+      - name: Add extra packages
+        run: |
+          EXTRA="${{ github.event.inputs.extra_packages }}"
+          if [ -n "$EXTRA" ]; then
+            for pkg in $EXTRA; do
+              echo "$pkg" >> packages.x86_64
+            done
+            echo "✅ Added extra packages: $EXTRA"
+          else
+            echo "ℹ️ No extra packages requested"
+          fi
+
+      - name: Build ISO
+        run: |
+          chmod +x build.sh
+          sudo ./build.sh -v
+          echo "✅ Build complete!"
+          ls -lh *.iso 2>/dev/null || ls -lh out/*.iso 2>/dev/null || find . -name "*.iso" -ls
+
+      - name: Upload ISO artifact
+        if: ${{ github.event.inputs.upload_artifact == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: moonlightos-meow-v${{ github.event.inputs.iso_version }}-${{ github.run_number }}
+          path: "*.iso"
+          retention-days: 7
+          if-no-files-found: error
