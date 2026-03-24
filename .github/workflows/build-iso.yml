@@ -46,7 +46,7 @@ jobs:
 
       - name: Create profiledef.sh
         run: |
-          cat > profiledef.sh << 'BASE'
+          cat > profiledef.sh << 'EOF'
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
@@ -72,11 +72,11 @@ file_permissions=(
   ["/usr/local/bin/livecd-sound"]="0:0:755"
   ["/root/install.sh"]="0:0:755"
 )
-BASE
+EOF
 
-          # Inject dynamic values safely
-          echo 'iso_version="${{ github.event.inputs.iso_version }}"' >> profiledef.sh
-          sed -i "s|-comp xz|-comp ${{ github.event.inputs.compression }}|" profiledef.sh || true
+          # Inject dynamic values safely (this is the part that was breaking)
+          echo "iso_version=\"${{ github.event.inputs.iso_version }}\"" >> profiledef.sh
+          sed -i "s/-comp xz/-comp ${{ github.event.inputs.compression }}/" profiledef.sh || true
 
           # Extra packages
           if [ -n "${{ github.event.inputs.extra_packages }}" ]; then
