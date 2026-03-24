@@ -19,14 +19,36 @@ No bloat. No telemetry. Just Openbox, stars, and chaos.
 ## Project Structure
 ```
 moonlightos-meow/
-├── docs/               # Build guides, lore, ideas.md
-├── openbox-config/     # Openbox rice (from Archcraft repo)
-├── kickstart/          # Legacy Fedora kickstart (v4.0 archive)
+├── airootfs/           # Live environment root filesystem
+├── efiboot/            # EFI boot entries
+├── grub/               # GRUB bootloader config
+├── syslinux/           # Syslinux bootloader config
+├── utilities/          # Build helper scripts
 ├── website/            # Landing page (Vite + React + Tailwind)
-├── .gitignore
-├── LICENSE
+├── docs/               # Build guides, lore, ideas.md
+├── kickstart/          # Legacy Fedora kickstart (v4.0 archive)
+├── build.sh            # Main ISO build script
+├── packages.x86_64     # Package list
+├── pacman.conf         # Pacman configuration
+├── profiledef.sh       # ISO profile definition
+├── bootstrap_packages  # Bootstrap package list
 └── README.md
 ```
+
+## Building the ISO
+
+### Locally
+```bash
+git clone https://github.com/moonlightOS-Meow/moonlightos-meow
+cd moonlightos-meow
+git checkout v5.0-meow
+sudo ./build.sh
+```
+
+### GitHub Actions
+Trigger the **Build moonlightOS Meow ISO** workflow from the Actions tab.
+You can customize version, extra packages, and compression format before building.
+The ISO will be available as a downloadable artifact for 7 days.
 
 ## Quick Start – Website
 ```bash
@@ -36,7 +58,8 @@ pnpm dev          # http://localhost:3000
 pnpm build        # outputs to dist/
 ```
 
-GitLab Pages auto-deploys from branch v5.0-meow.
+GitHub Pages auto-deploys from branch v5.0-meow.
+Live at: https://moonlightos-meow.github.io/moonlightos-meow
 
 ## Adding mos-meow-repo
 
@@ -51,15 +74,6 @@ Then:
 ```bash
 pacman -Sy meow-branding
 ```
-
-## Building ISO
-```bash
-git clone https://github.com/gsanhueza/ArchISOMaker
-cd ArchISOMaker
-sudo ./build.sh -v
-```
-
-ISO will be available as a GitLab Release.
 
 ## License
 
