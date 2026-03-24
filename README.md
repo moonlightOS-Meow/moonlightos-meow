@@ -26,7 +26,6 @@ moonlightos-meow/
 ├── utilities/          # Build helper scripts
 ├── website/            # Landing page (Vite + React + Tailwind)
 ├── docs/               # Build guides, lore, ideas.md
-├── kickstart/          # Legacy Fedora kickstart (v4.0 archive)
 ├── build.sh            # Main ISO build script
 ├── packages.x86_64     # Package list
 ├── pacman.conf         # Pacman configuration
