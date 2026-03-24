@@ -48,7 +48,8 @@ jobs:
         run: |
           echo "=== Injecting build parameters ==="
 
-          cat > profiledef.sh << 'HEREDOC'
+          # Create base profiledef.sh
+          cat > profiledef.sh << 'BASE'
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
@@ -74,12 +75,10 @@ file_permissions=(
   ["/usr/local/bin/livecd-sound"]="0:0:755"
   ["/root/install.sh"]="0:0:755"
 )
-HEREDOC
+BASE
 
-          # Set iso_version safely
-          sed -i "s|^iso_version=.*|iso_version=\"${{ github.event.inputs.iso_version }}\"|" profiledef.sh
-
-          # Set compression safely
+          # Safely inject iso_version and compression
+          echo "iso_version=\"${{ github.event.inputs.iso_version }}\"" >> profiledef.sh
           sed -i "s|-comp xz|-comp ${{ github.event.inputs.compression }}|" profiledef.sh || true
 
           # Add extra packages if provided
