@@ -74,7 +74,7 @@ file_permissions=(
 )
 EOF
 
-          # Inject dynamic values safely (this is the part that was breaking)
+          # Inject dynamic values line by line (this avoids YAML issues)
           echo "iso_version=\"${{ github.event.inputs.iso_version }}\"" >> profiledef.sh
           sed -i "s/-comp xz/-comp ${{ github.event.inputs.compression }}/" profiledef.sh || true
 
