@@ -44,11 +44,8 @@ jobs:
           pacman -Syu --noconfirm
           pacman -S --noconfirm archiso git sudo dosfstools e2fsprogs libisoburn squashfs-tools
 
-      - name: Inject build inputs
+      - name: Create profiledef.sh
         run: |
-          echo "=== Injecting build parameters ==="
-
-          # Create base profiledef.sh
           cat > profiledef.sh << 'BASE'
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
@@ -77,11 +74,11 @@ file_permissions=(
 )
 BASE
 
-          # Safely inject iso_version and compression
-          echo "iso_version=\"${{ github.event.inputs.iso_version }}\"" >> profiledef.sh
+          # Inject dynamic values safely
+          echo 'iso_version="${{ github.event.inputs.iso_version }}"' >> profiledef.sh
           sed -i "s|-comp xz|-comp ${{ github.event.inputs.compression }}|" profiledef.sh || true
 
-          # Add extra packages if provided
+          # Extra packages
           if [ -n "${{ github.event.inputs.extra_packages }}" ]; then
             echo "" >> packages.x86_64
             echo "# Extra packages from workflow dispatch" >> packages.x86_64
@@ -92,9 +89,6 @@ BASE
 
           echo "=== Final profiledef.sh ==="
           cat profiledef.sh
-
-          echo "=== Last 10 lines of packages.x86_64 ==="
-          tail -10 packages.x86_64 || echo "packages.x86_64 not found"
 
       - name: Build ISO
         run: |
