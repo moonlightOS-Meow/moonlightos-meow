@@ -1,0 +1,328 @@
+/* moonlightOS Website — "Moonlit Nebula" Design System
+ * Design Movement: Villain Arc — Dark Cosmic + Arch Chaos + Meme Energy
+ * Color Philosophy: Deep navy-black base, pink/magenta/red gradients, cosmic chaos
+ * Typography: Space Grotesk (headings) + JetBrains Mono (code/terminal)
+ * Signature: Animated star field, glassmorphism cards, villain aesthetic
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.75rem;
+  /* Villain Arc dark theme — always dark, pink/magenta accents */
+  --background: oklch(0.08 0.02 280);  /* Deep navy-black */
+  --foreground: oklch(0.92 0.01 280);  /* Cosmic white */
+  --card: oklch(0.12 0.025 275);  /* Slightly lighter navy */
+  --card-foreground: oklch(0.92 0.01 280);
+  --popover: oklch(0.12 0.025 275);
+  --popover-foreground: oklch(0.92 0.01 280);
+  --primary: oklch(0.65 0.22 320);  /* Pink/Magenta for v5 */
+  --primary-foreground: oklch(0.98 0.005 280);
+  --secondary: oklch(0.15 0.03 275);
+  --secondary-foreground: oklch(0.85 0.01 280);
+  --muted: oklch(0.14 0.02 275);
+  --muted-foreground: oklch(0.6 0.02 280);
+  --accent: oklch(0.60 0.22 320);  /* Pink accent for Lucyfer's Revenge */
+  --accent-foreground: oklch(0.98 0.005 280);
+  --destructive: oklch(0.65 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.65 0.22 320);  /* Pink ring for v5 */
+  --chart-1: oklch(0.65 0.22 320);
+  --chart-2: oklch(0.6 0.2 340);
+  --chart-3: oklch(0.55 0.18 300);
+  --chart-4: oklch(0.7 0.15 240);
+  --chart-5: oklch(0.5 0.25 310);
+  --sidebar: oklch(0.1 0.02 275);
+  --sidebar-foreground: oklch(0.92 0.01 280);
+  --sidebar-primary: oklch(0.65 0.22 320);
+  --sidebar-primary-foreground: oklch(0.98 0.005 280);
+  --sidebar-accent: oklch(0.15 0.03 320);  /* Pink accent for sidebar */
+  --sidebar-accent-foreground: oklch(0.85 0.01 280);
+  --sidebar-border: oklch(1 0 0 / 8%);
+  --sidebar-ring: oklch(0.65 0.22 320);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-color: #04050F;
+    color: #E8EEFF;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+
+  /* Glassmorphism card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+  }
+
+  .glass-card-glow {
+    background: rgba(124, 58, 237, 0.06);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 1rem;
+    box-shadow: 0 0 30px rgba(124, 58, 237, 0.1), inset 0 0 30px rgba(124, 58, 237, 0.03);
+  }
+
+  /* Cosmic gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #a78bfa 0%, #60a5fa 50%, #e8eeff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-violet {
+    background: linear-gradient(135deg, #c4b5fd 0%, #818cf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow button */
+  .btn-cosmic {
+    background: linear-gradient(135deg, #7c3aed, #3b82f6);
+    border: none;
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-cosmic:hover {
+    box-shadow: 0 0 40px rgba(124, 58, 237, 0.7), 0 0 80px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .btn-cosmic-outline {
+    background: transparent;
+    border: 1px solid rgba(124, 58, 237, 0.5);
+    color: #a78bfa;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .btn-cosmic-outline:hover {
+    border-color: rgba(124, 58, 237, 0.9);
+    background: rgba(124, 58, 237, 0.1);
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3);
+    color: #c4b5fd;
+  }
+
+  /* Terminal font */
+  .font-mono-cosmic {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+
+  /* Star field canvas */
+  #star-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Section divider */
+  .moon-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    color: rgba(167, 139, 250, 0.4);
+    font-size: 1.2rem;
+    letter-spacing: 0.5rem;
+  }
+
+  .moon-divider::before,
+  .moon-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.3), transparent);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #04050F;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.4);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(124, 58, 237, 0.7);
+  }
+}
+
+/* Animations */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.7), 0 0 80px rgba(59, 130, 246, 0.2); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out forwards;
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+/* Delay utilities */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }

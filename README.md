@@ -1,123 +1,70 @@
-# moonlightOS Meow v4.0-pre
+# moonlightOS Meow v5.0 "Lucyfer's Revenge"
 
-**Named by a cat. Powered by chaos. Built with Fedora.**
+Arch-based chaos distro built by Ash.
+Named by Lucyfer the cat. Powered by chaos. Villain Arc activated. 😈
 
-moonlightOS Meow is a minimal, cosmic-themed Linux distribution based on Nobara (Fedora 43) with i3 window manager as the default, KDE Plasma as an optional desktop environment, and a beautiful boot sound to welcome you to the void.
+## What is Meow?
 
-## 🌙 Features
+A lightweight, cosmic-themed Linux distro. Minimal. Dark. Unhinged.
+No bloat. No telemetry. Just Openbox, stars, and chaos.
 
-- **Minimal i3 Setup** — Lightweight, keyboard-driven window manager with soft red styling
-- **Fedora Base** — Stable, modern, and well-maintained
-- **Anaconda Installer** — User-friendly installation with partitioning control
-- **KDE Plasma Optional** — Choose your poison: i3 or KDE at install time
-- **Cosmic Aesthetic** — Dark theme, purple accents, and a boot jingle that blesses your ears
-- **Lucyfer Approved** — QA tested by an actual cat
+- **Base:** Arch Linux (rolling release)
+- **WM:** Openbox (rice from Archcraft repo)
+- **Installer:** archinstall
+- **Packages:** mos-meow-repo (custom pacman repo)
+- **Named by:** Lucyfer (the cat)
+- **NoVa V3:** dead (730+ commits, 0 ISOs, S3RL bait legacy)
+- **Meow v4.0:** Fedora/Nobara era, RIP 🪦
 
-## 📦 What's Inside
-
+## Project Structure
 ```
-kickstart/
-  └── moonlightos-meow.ks       # Anaconda kickstart configuration
-i3-config/
-  ├── config                     # i3 window manager config (soft red style)
-  ├── alacritty.toml            # Terminal emulator configuration
-  └── powermenu.sh              # Rofi power menu script
-docs/
-  └── BUILD.md                  # Full build instructions for ISO creation
+moonlightos-meow/
+├── docs/               # Build guides, lore, ideas.md
+├── openbox-config/     # Openbox rice (from Archcraft repo)
+├── kickstart/          # Legacy Fedora kickstart (v4.0 archive)
+├── website/            # Landing page (Vite + React + Tailwind)
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 
-## 🚀 Building the ISO
-
-### Prerequisites
-
-- Nobara 43 (or Fedora 43) with at least 50GB free space
-- 4GB+ RAM recommended
-- `lorax`, `livemedia-creator`, and related tools installed
-
-### Quick Start
-
+## Quick Start – Website
 ```bash
-# Install dependencies
-sudo dnf install -y lorax livemedia-creator pykickstart anaconda
-
-# Validate the kickstart
-ksvalidator kickstart/moonlightos-meow.ks
-
-# Build the ISO
-sudo livemedia-creator --ks=kickstart/moonlightos-meow.ks \
-  --no-virt --make-iso --iso-only \
-  --resultdir=/tmp/moonlightos-meow \
-  --project="moonlightOS Meow" \
-  --volid="moonlightOS-Meow-v4"
+cd website
+pnpm install
+pnpm dev          # http://localhost:3000
+pnpm build        # outputs to dist/
 ```
 
-See `docs/BUILD.md` for detailed instructions and troubleshooting.
+GitLab Pages auto-deploys from branch v5.0-meow.
 
-## 🎨 Customization
+## Adding mos-meow-repo
 
-### i3 Configuration
+Add to `/etc/pacman.conf`:
+```ini
+[mos-meow-repo]
+SigLevel = Optional TrustAll
+Server = https://gitlab.com/moonlightos-dev/mos-meow-repo/-/raw/master/x86_64
+```
 
-Edit `i3-config/config` to customize:
-- Keybindings
-- Workspaces
-- Window behavior
-- Status bar settings
-
-The current setup uses soft red accents and is designed to be beginner-friendly with helpful comments.
-
-### Terminal Theme
-
-Modify `i3-config/alacritty.toml` to adjust:
-- Colors (currently red/dark theme)
-- Font and size
-- Opacity and padding
-
-### Boot Sound
-
-The boot jingle is configured to play on i3 startup via `exec_always` in the i3 config. To use a custom sound:
-
+Then:
 ```bash
-# Copy your sound file
-sudo cp your-sound.wav /usr/share/sounds/moonlightos/boot.wav
-
-# Edit i3 config to point to your file
-exec_always --no-startup-id paplay /usr/share/sounds/moonlightos/boot.wav
+pacman -Sy meow-branding
 ```
 
-## 📖 Documentation
+## Building ISO
+```bash
+git clone https://github.com/gsanhueza/ArchISOMaker
+cd ArchISOMaker
+sudo ./build.sh -v
+```
 
-- **BUILD.md** — Complete ISO building guide with troubleshooting
-- **i3 Config** — Inline comments explaining keybindings and settings
-- **Kickstart File** — Detailed comments on package selection and post-install scripts
+ISO will be available as a GitLab Release.
 
-## 🐱 The Story
+## License
 
-moonlightOS Meow is the result of:
-- 730 commits and zero bootable ISOs (NoVa V3 RIP)
-- Multiple Linux installer meltdowns
-- One cat's decisive naming vote
-- A cosmic aesthetic that refuses to compromise
+MIT License — do whatever you want, just keep the cat named Lucyfer.
 
-**OOH-OOH. YOU JUST GOT BAITED.** (98+ times and counting)
-
-## 📜 License
-
-MIT License — See LICENSE file for details.
-
-## 🌙 Links
-
-- **Website:** https://moonlightos-dev.gitlab.io/moonlightos-meow/
-- **GitLab:** https://gitlab.com/moonlightos-dev/moonlightos-meow/
-- **GitHub:** https://github.com/moonlightOS-Meow/moonlightos-meow/
-
-## 🎵 Boot Sound
-
-The boot jingle is included in the kickstart and plays automatically on i3 startup. It's cosmic, it's comfy, and it blesses your ears. 💀🌙
-
----
-
-**Built by Ash. Named by Lucyfer. Powered by chaos.**
-
----
-
-> 🤖 This commit was pushed by Claude (Anthropic) directly from a sandboxed container. Not Ash. Claude did this. Via PAT auth. Yes this is real.
+Made with pain, chaos, and a lot of "WHY... WHY!!!"
+© 2026 Ash & Lucyfer the cat
+Long live Meow. NoVa V3 stays dead. Lucyfer's Revenge is real. 🐱🌙
