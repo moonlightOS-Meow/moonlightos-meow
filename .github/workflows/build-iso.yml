@@ -48,7 +48,6 @@ jobs:
         run: |
           echo "=== Injecting build parameters ==="
 
-          # Create profiledef.sh safely
           cat > profiledef.sh << 'HEREDOC'
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
@@ -57,14 +56,12 @@ iso_name="mos-meow"
 iso_label="MEOW_$(date +%Y%m%d)"
 iso_publisher="Ash"
 iso_application="moonlightOS Meow v5 Live"
-iso_version="${{ github.event.inputs.iso_version }}"
 install_dir="meow"
 buildmodes=('iso')
 bootmodes=('bios.syslinux' 'uefi.systemd-boot')
 arch="x86_64"
 pacman_conf="pacman.conf"
 airootfs_image_type="squashfs"
-airootfs_image_tool_options=('-comp' '${{ github.event.inputs.compression }}' '-Xbcj' 'x86' '-b' '1M' '-Xdict-size' '1M')
 bootstrap_tarball_compression=('zstd' '-c' '-T0' '--auto-threads=logical' '--long' '-19')
 
 file_permissions=(
@@ -78,6 +75,12 @@ file_permissions=(
   ["/root/install.sh"]="0:0:755"
 )
 HEREDOC
+
+          # Set iso_version safely
+          sed -i "s|^iso_version=.*|iso_version=\"${{ github.event.inputs.iso_version }}\"|" profiledef.sh
+
+          # Set compression safely
+          sed -i "s|-comp xz|-comp ${{ github.event.inputs.compression }}|" profiledef.sh || true
 
           # Add extra packages if provided
           if [ -n "${{ github.event.inputs.extra_packages }}" ]; then
