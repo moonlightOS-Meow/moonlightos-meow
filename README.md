@@ -25,7 +25,6 @@ moonlightos-meow/
 ├── syslinux/           # Syslinux bootloader config
 ├── utilities/          # Build helper scripts
 ├── website/            # Landing page (Vite + React + Tailwind)
-├── docs/               # Build guides, lore, ideas.md
 ├── build.sh            # Main ISO build script
 ├── packages.x86_64     # Package list
 ├── pacman.conf         # Pacman configuration
