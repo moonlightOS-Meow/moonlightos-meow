@@ -48,7 +48,8 @@ jobs:
         run: |
           echo "=== Injecting build parameters ==="
 
-          cat > profiledef.sh << 'EOF'
+          # Create profiledef.sh safely
+          cat > profiledef.sh << 'HEREDOC'
 #!/usr/bin/env bash
 # shellcheck disable=SC2034
 
@@ -76,7 +77,7 @@ file_permissions=(
   ["/usr/local/bin/livecd-sound"]="0:0:755"
   ["/root/install.sh"]="0:0:755"
 )
-EOF
+HEREDOC
 
           # Add extra packages if provided
           if [ -n "${{ github.event.inputs.extra_packages }}" ]; then
