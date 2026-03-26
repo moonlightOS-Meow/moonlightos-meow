@@ -1,82 +1,60 @@
-# moonlightOS Meow v5.0 "Lucyfer's Revenge"
+# moonlightOS Meow - Windows Edition 🪟😈
+### *"If you can't beat them, debloat them."*
 
-Arch-based chaos distro built by Ash.
-Named by Lucyfer the cat. Powered by chaos. Villain Arc activated. 😈
+> ⚠️ WARNING: This is a Windows build. Lucyfer does not approve. The cat has filed a formal complaint.
+> NoVa V3 is still dead. This is what happens when Linux fails you.
 
-## What is Meow?
+Built by Ash. Named by Lucyfer. Powered by spite. Running on NTFS and telemetry. 😈
 
-A lightweight, cosmic-themed Linux distro. Minimal. Dark. Unhinged.
-No bloat. No telemetry. Just Openbox, stars, and chaos.
+---
 
-- **Base:** Arch Linux (rolling release)
-- **WM:** Openbox (rice from Archcraft repo)
-- **Installer:** archinstall
-- **Packages:** mos-meow-repo (custom pacman repo)
-- **Named by:** Lucyfer (the cat)
-- **NoVa V3:** dead (730+ commits, 0 ISOs, S3RL bait legacy)
-- **Meow v4.0:** Fedora/Nobara era, RIP 🪦
+## What is this abomination?
 
-## Project Structure
-```
-moonlightos-meow/
-├── airootfs/           # Live environment root filesystem
-├── efiboot/            # EFI boot entries
-├── grub/               # GRUB bootloader config
-├── syslinux/           # Syslinux bootloader config
-├── utilities/          # Build helper scripts
-├── website/            # Landing page (Vite + React + Tailwind)
-├── build.sh            # Main ISO build script
-├── packages.x86_64     # Package list
-├── pacman.conf         # Pacman configuration
-├── profiledef.sh       # ISO profile definition
-├── bootstrap_packages  # Bootstrap package list
-└── README.md
-```
+moonlightOS Meow Windows Edition is a debloated Windows 11 build made with NTLite.
+No bloat. No telemetry (we tried). No Cortana. No dignity.
+Just a clean Windows base with the moonlightOS aesthetic slapped on top.
 
-## Building the ISO
+Because sometimes Calamares cries, the RTX 5080 needs drivers, and dad just wants his mobo LCD to work.
 
-### Locally
-```bash
-git clone https://github.com/moonlightOS-Meow/moonlightos-meow
-cd moonlightos-meow
-git checkout v5.0-meow
-sudo ./build.sh
-```
+- **Base:** Windows 11 (unfortunately)
+- **Tool:** NTLite
+- **WM:** GlazeWM (because we refuse to use the default taskbar)
+- **Bar:** Zebar
+- **Visualizer:** CAVA (yes, on Windows)
+- **Wallpaper:** Makka Pakka 🪨
+- **Named by:** Lucyfer (under protest)
+- **Linux status:** Temporary setback. We will return. 🐧
 
-### GitHub Actions
-Trigger the **Build moonlightOS Meow ISO** workflow from the Actions tab.
-You can customize version, extra packages, and compression format before building.
-The ISO will be available as a downloadable artifact for 7 days.
+---
 
-## Quick Start – Website
-```bash
-cd website
-pnpm install
-pnpm dev          # http://localhost:3000
-pnpm build        # outputs to dist/
-```
+## Why does this exist?
 
-GitHub Pages auto-deploys from branch v5.0-meow.
-Live at: https://moonlightos-meow.github.io/moonlightos-meow
+- Calamares broke for the last time
+- RTX 5080 needs proprietary drivers
+- Dad's GIGABYTE AI TOP mobo LCD only works on Windows
+- YAML hell claimed another victim
+- NoVa V3 was already dead anyway
 
-## Adding mos-meow-repo
+---
 
-Add to `/etc/pacman.conf`:
-```ini
-[mos-meow-repo]
-SigLevel = Optional TrustAll
-Server = https://gitlab.com/moonlightos-dev/mos-meow-repo/-/raw/master/x86_64
-```
+## What's included
 
-Then:
-```bash
-pacman -Sy meow-branding
-```
+- Debloated Windows 11 via NTLite
+- GlazeWM tiling window manager
+- Zebar status bar
+- CAVA audio visualizer
+- moonlightOS aesthetic (dark, cosmic, unhinged)
+- Makka Pakka wallpaper (non-negotiable)
+
+---
 
 ## License
 
-MIT License — do whatever you want, just keep the cat named Lucyfer.
+WTFPL — See LICENSE.md
+Do whatever you want. Lucyfer doesn't care anymore.
 
-Made with pain, chaos, and a lot of "WHY... WHY!!!"
-© 2026 Ash & Lucyfer the cat
-Long live Meow. NoVa V3 stays dead. Lucyfer's Revenge is real. 🐱🌙
+---
+
+*Long live the moon... even if it's running on NTFS.*
+*moonlightOS Linux will return. It always does.* 🐱🌙
+*"I ALWAYS COME BACK" — Ash, 2026*
