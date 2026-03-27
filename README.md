@@ -65,14 +65,16 @@ an audio visualizer, and set Makka Pakka as the wallpaper. Because why not.
 
 ---
 
+
+---
+
 ## After installing
 
-Install GlazeWM and Zebar manually — they're not baked into the ISO yet (v1.1 problem):
-- [GlazeWM](https://github.com/glzr-io/glazewm)
-- [Zebar](https://github.com/glzr-io/zebar)
-- [CAVA for Windows](https://github.com/nickvdyck/cava) (good luck)
+Everything is already set up. That's the point. 😈
 
-Set the Makka Pakka wallpaper yourself. It's mandatory. Here's [the photo](https://github.com/moonlightOS-Meow/moonlightos-meow/blob/meow-ntlite/moonlightOS.jpg).
+GlazeWM, Zebar, CAVA, and the Makka Pakka wallpaper are all baked into the ISO via post-install scripts. You don't need to do anything extra. Just install and vibe.
+
+> 💡 **If something didn't install:** blame NTLite. Or Lucyfer. Probably Lucyfer.
 
 ---
 
