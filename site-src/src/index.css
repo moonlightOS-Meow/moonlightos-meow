@@ -1,21 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Quicksand:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&family=Quicksand:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap');
 
 :root {
-  --bg: #0a0a0f;
-  --surface: #111118;
-  --border: #1e1e2e;
+  --bg: #06060f;
+  --surface: #0d0d1a;
+  --surface2: #111122;
+  --border: #1a1a2e;
   --accent: #c084fc;
   --accent2: #f472b6;
   --accent3: #38bdf8;
+  --accent4: #a78bfa;
   --text: #e2e8f0;
   --muted: #64748b;
   --win: #0078d4;
   --danger: #ef4444;
   --stone: #a8a29e;
+  --green: #22c55e;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -26,18 +28,15 @@ body {
   cursor: none;
 }
 
-::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar { width: 3px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--accent), var(--accent2)); border-radius: 2px; }
 
 body::after {
   content: '';
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg, transparent, transparent 2px,
-    rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px
-  );
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.04) 2px, rgba(0,0,0,0.04) 4px);
   pointer-events: none;
-  z-index: 999;
+  z-index: 998;
 }
