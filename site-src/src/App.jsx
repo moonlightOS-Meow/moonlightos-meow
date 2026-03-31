@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
+import lucyferImg from './assets/lucyfer.jpg'
+import lucyferHead from './assets/lucyfer-head.png'
 
 function App() {
   const [scrollY, setScrollY] = useState(0)
@@ -132,7 +134,7 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <div className="logo" onClick={() => scrollToSection('hero')}>
-            <img src="/lucyfer.jpg" alt="Lucyfer" className="logo-img" />
+            <img src={lucyferImg} alt="Lucyfer" className="logo-img" />
             <span>moonlightOS Meow</span>
           </div>
           <ul className="nav-links">
@@ -157,7 +159,7 @@ function App() {
           </div>
         </div>
         <div className="hero-visual">
-          <img src="/lucyfer.jpg" alt="Lucyfer" className="hero-image" style={{
+          <img src={lucyferHead} alt="Lucyfer" className="hero-image" style={{
             transform: `translateY(${scrollY * 0.3}px) scale(${1 + scrollY / 2000})`
           }} />
         </div>
