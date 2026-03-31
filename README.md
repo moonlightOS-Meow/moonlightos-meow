@@ -1,120 +1,81 @@
-# moonlightOS Meow — Windows Edition 🪟😈
-### *"If you can't beat them, debloat them."*
+# moonlightOS Meow v6.0 "Lucyfer's Resurrection" 🐱☠️
+### *"He came back. He always comes back."*
 
-> ⚠️ **WARNING:** This is a Windows build. Lucyfer (he/him) does not approve. He has filed complaint #7749. The build proceeded anyway.
-> NoVa V3 is still dead. This is what happens when Linux fails you.
+> ⚠️ Lucyfer (he/him) has filed complaint #8001. The distro exists anyway.
+> NoVa V3 is still dead. This is its spiritual successor. Debian edition.
 
-**Built by Ash. Named by Lucyfer. Powered by spite. Running on NTFS and telemetry.**
-
----
-
-## What even is this?
-
-It's Windows 11. But less terrible.
-
-moonlightOS Meow Windows Edition is a debloated Windows 11 build made with NTLite.
-We removed the garbage Microsoft bundles, added a tiling window manager, a status bar,
-an audio visualizer, and set Makka Pakka as the wallpaper. Because why not.
-
-**If you don't know what NTLite is:** it's a tool that lets you strip Windows down before installing it. Like surgery, but for an OS that desperately needed it.
+**Built by Ash. Named by Lucyfer. Powered by chaos. Based on Debian 13 Trixie.**
 
 ---
 
-## What's included
+## What is this?
 
-| Thing | What it does |
-|---|---|
-| 🪟 **Windows 11 Pro + Home** | Both editions in one ISO |
-| 🔧 **NTLite debloat** | 139 components yeeted |
-| ⬛ **GlazeWM** | Tiling window manager (like i3 but on Windows, don't ask) |
-| 📊 **Zebar** | Status bar because the default taskbar is a war crime |
-| 🎵 **CAVA** | Audio visualizer that has no business being on Windows |
-| 🪨 **Makka Pakka wallpaper** | Non-negotiable. Do not question it. |
-| 🕵️ **No telemetry** | Microsoft is not watching. Probably. |
-| 🐱 **Lucyfer's disapproval** | Comes pre-installed. Cannot be removed. |
+moonlightOS Meow v6.0 is a minimal Debian 13 (Trixie) based live ISO.
+No desktop environment. No bloat. No mercy.
+Just a clean, minimal system with the tools you need and nothing you don't.
 
----
+Pick your own desktop. Rice it yourself. You know what you're doing.
+If you don't — maybe start with the Windows Edition.
 
-## What we removed
-
-- Telemetry services (bye Microsoft, don't miss you)
-- Cortana (nobody asked)
-- Xbox services (you can add them back, we don't judge... actually we do)
-- Tips & Suggestions (we know how to use Windows, thanks)
-- Advertising IDs (no)
-- Unused language packs (saves space)
-- Some legacy apps (they were old and sad)
-- Edge PDF viewer (idk if i did that)
-- Clipchamp (absolutely not)
-- OneDrive (actually NTLite didn't let me remove it fully, skill issue)
-
-**Nothing essential has been removed. Probably.**
+- **Base:** Debian 13 "Trixie"
+- **Desktop:** None (bring your own)
+- **Installer:** Debian installer (not Calamares. never again.)
+- **Philosophy:** Minimal. Chaos. Lucyfer approved (reluctantly).
+- **Named by:** Lucyfer (he/him, under protest)
+- **NoVa V3:** still dead
 
 ---
 
-## How to install
+## Why Debian?
 
-1. **Download the ISO** from the [Releases page](https://github.com/moonlightOS-Meow/moonlightos-meow/releases)
-2. **Verify the checksum** (SHA-256 is in the release notes, please do this)
-3. **Flash it to a USB** using [Rufus](https://rufus.ie) — use GPT + UEFI mode
-4. **Boot from USB** (spam F12, F11, DEL, or whatever your BIOS key is)
-5. **Install Windows** like normal — pick Home or Pro when asked
-6. **Don't blame us** if something goes wrong
-
-> 💡 **Tip for noobs:** If your PC won't boot from USB, Google "[your motherboard name] boot from USB" and follow the instructions. We believe in you.
+- Arch was getting boring
+- Fedora/Nobara gave us PTSD (v4.0 era)
+- Windows Edition exists and that's already cursed enough
+- Debian 13 Trixie is stable and doesn't fight back
+- live-build is actually not terrible
+- Lucyfer said "mrrp" which we interpreted as approval
 
 ---
 
+## Building the ISO
 
----
+### GitHub Actions (recommended)
+Trigger the **Build moonlightOS Meow v6.0 ISO** workflow from the Actions tab.
+Customize packages and compression before building.
+ISO available as downloadable artifact for 7 days.
 
-## After installing
-
-Everything is already set up. That's the point. 😈
-
-GlazeWM, Zebar, CAVA, and the Makka Pakka wallpaper are all baked into the ISO via post-install scripts. You don't need to do anything extra. Just install and vibe.
-
-> 💡 **If something didn't install:** blame NTLite. Or Lucyfer. Probably Lucyfer.
-
----
-
-## Adding mos-meow-repo (optional)
-
-If you somehow also use the Arch Linux version of moonlightOS, add to `/etc/pacman.conf`:
-```ini
-[mos-meow-repo]
-SigLevel = Optional TrustAll
-Server = https://gitlab.com/moonlightos-dev/mos-meow-repo/-/raw/master/x86_64
+### Local build (Debian/Ubuntu only)
+```bash
+sudo apt install live-build
+git clone https://github.com/moonlightOS-Meow/moonlightos-meow
+cd moonlightos-meow
+git checkout meow-debian
+cd live-build
+sudo lb build
 ```
-This is irrelevant on Windows. We just thought you should know it exists.
 
 ---
 
-## Why does this exist?
+## Version Lore
 
-- Calamares kept crying
-- RTX 5080 needed proprietary drivers
-- Dad's GIGABYTE AI TOP mobo LCD only works on Windows
-- YAML hell claimed another victim
-- NoVa V3 was already dead anyway
-- Linux will return. It always does.
-
----
-
-## Known issues
-
-- None yet — report if you find any gremlins 👀
-- If you find Lucyfer (he/him), he is not a bug. He is a feature.
+| Version | Status | Notes |
+|---|---|---|
+| AshOS v1 | 💀 DEAD | Kubuntu remaster, born from chaos |
+| Phoenix v1-v2 | 💀 ARCHIVED | rm -rf survivor, GRUB trauma |
+| NoVa V3 | 💀 DEAD | 730+ commits, 0 ISOs, legend |
+| Meow v4.0 | 💀 RIP | Fedora era, kickstart hell |
+| Meow v5.0 | ✅ ALIVE | Arch, Openbox, villain arc |
+| Windows Edition | 🪟 ACTIVE | NTLite, Makka Pakka, spite |
+| **Meow v6.0** | ☠️ **YOU ARE HERE** | Debian, minimal, resurrection |
 
 ---
 
 ## License
 
-WTFPL — See [LICENSE.md](LICENSE.md)
-Do whatever you want. Lucyfer doesn't care anymore.
+WTFPL v3 (Remastered Edition) — See [LICENSE.md](LICENSE.md)
+Do whatever. Lucyfer doesn't care. He's asleep.
 
 ---
 
-*Long live the moon... even if it's running on NTFS.*
-*moonlightOS Linux will return. It always does.* 🐱🌙
 *"I ALWAYS COME BACK" — Ash, 2026*
+*Lucyfer's Resurrection. For real this time. Maybe. 🌙🐱*

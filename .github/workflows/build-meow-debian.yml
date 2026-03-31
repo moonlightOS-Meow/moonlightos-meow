@@ -1,0 +1,86 @@
+name: 🐱 Build moonlightOS Meow v6.0 ISO
+
+on:
+  workflow_dispatch:
+    inputs:
+      compression:
+        description: 'Squashfs compression'
+        required: true
+        default: 'xz'
+        type: choice
+        options:
+          - xz
+          - zstd
+          - lz4
+      extra_packages:
+        description: 'Extra packages (space-separated)'
+        required: false
+        default: ''
+      upload_artifact:
+        description: 'Upload ISO as artifact'
+        required: true
+        default: 'true'
+        type: boolean
+
+jobs:
+  build:
+    name: 🔨 Build Debian Live ISO
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: meow-debian
+
+      - name: Install live-build
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y live-build debootstrap squashfs-tools xorriso
+
+      - name: Add extra packages
+        if: ${{ github.event.inputs.extra_packages != '' }}
+        run: |
+          echo "" >> live-build/config/package-lists/meow.list.chroot
+          echo "# Extra packages from workflow dispatch" >> live-build/config/package-lists/meow.list.chroot
+          for pkg in ${{ github.event.inputs.extra_packages }}; do
+            echo "$pkg" >> live-build/config/package-lists/meow.list.chroot
+          done
+
+      - name: Configure live-build
+        working-directory: live-build
+        run: |
+          sudo lb config noauto \
+            --distribution trixie \
+            --archive-areas "main contrib non-free non-free-firmware" \
+            --debian-installer live \
+            --debian-installer-gui true \
+            --bootappend-live "boot=live components quiet splash" \
+            --iso-volume "moonlightOS-Meow-v6" \
+            --image-name "moonlightos-meow-v6.0" \
+            --compression ${{ github.event.inputs.compression }}
+
+      - name: Build ISO
+        working-directory: live-build
+        run: sudo lb build
+
+      - name: Rename ISO
+        run: |
+          ISO=$(find live-build -name "*.iso" | head -1)
+          NEW_NAME="moonlightos-meow-v6.0-lucyfers-resurrection-$(date +%Y%m%d)-amd64.iso"
+          sudo mv "$ISO" "$NEW_NAME"
+          echo "ISO_NAME=$NEW_NAME" >> $GITHUB_ENV
+          sha256sum "$NEW_NAME" > "${NEW_NAME}.sha256"
+          echo "✅ Built: $NEW_NAME"
+          ls -lh "$NEW_NAME"
+          cat "${NEW_NAME}.sha256"
+
+      - name: Upload ISO artifact
+        if: ${{ github.event.inputs.upload_artifact == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: moonlightos-meow-v6.0-${{ github.run_number }}
+          path: |
+            moonlightos-meow-v6.0-*.iso
+            moonlightos-meow-v6.0-*.sha256
+          retention-days: 7

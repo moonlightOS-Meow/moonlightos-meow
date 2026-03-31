@@ -1,0 +1,9 @@
+#!/bin/sh
+# moonlightOS Meow v6.0 branding hook
+echo "moonlightOS Meow v6.0 - Lucyfer's Resurrection" > /etc/moonlightos-release
+echo 'DISTRO_NAME="moonlightOS Meow"' >> /etc/moonlightos-release
+echo 'DISTRO_VERSION="6.0"' >> /etc/moonlightos-release
+echo 'DISTRO_CODENAME="Lucyfer'"'"'s Resurrection"' >> /etc/moonlightos-release
+echo 'NAMED_BY="Lucyfer (he/him, a cat)"' >> /etc/moonlightos-release
+echo 'BASE="Debian 13 Trixie"' >> /etc/moonlightos-release
+echo 'NOVA_V3_STATUS="dead"' >> /etc/moonlightos-release

@@ -1,0 +1,11 @@
+#!/bin/sh
+lb config noauto \
+    --distribution trixie \
+    --archive-areas "main contrib non-free non-free-firmware" \
+    --debian-installer live \
+    --debian-installer-gui true \
+    --bootappend-live "boot=live components quiet splash" \
+    --iso-volume "moonlightOS-Meow-v6" \
+    --image-name "moonlightos-meow-v6.0" \
+    --compression xz \
+    "${@}"

@@ -1,20 +1,30 @@
 # DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-## Version 2, December 2004
+## Version 3 (Remastered Edition) — Lucyfer's Resurrection Cut
 
-Copyright (C) 2026 Ash & Lucyfer the cat 🐱
+Copyright (C) 2026 Ash & Lucyfer the cat (he/him)
 
-Everyone is permitted to copy and distribute verbatim or modified copies of this license document, and changing it is allowed as long as the name is changed.
-
-## DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE
-### TERMS AND CONDITIONS FOR COPYING, DISTRIBUTION AND MODIFICATION
-
-0. You just DO WHAT THE FUCK YOU WANT TO.
+*Forged in chaos. Blessed by Makka Pakka. Signed off by a cat who doesn't care.*
 
 ---
 
-*This software comes with absolutely no warranty.*
-*If it deletes your system32, that's a skill issue.*
-*Lucyfer the cat accepts no liability.*
-*NoVa V3 is still dead.*
-*Windows is a cry for help.*
-*Makka Pakka washed his hands of this.*
+## TERMS AND CONDITIONS
+
+**0.** You just DO WHAT THE FUCK YOU WANT TO.
+
+**1.** Seriously. Whatever. We don't care.
+
+**2.** If it breaks your system, that's a skill issue.
+
+**3.** If you remove Makka Pakka from anything, that's a war crime.
+
+**4.** Lucyfer (he/him) reserves the right to knock this license off the table at any time.
+
+**5.** NoVa V3 is still dead. This clause exists for legal purposes.
+
+**6.** This license is version 3 because version 2 didn't have enough chaos.
+
+---
+
+*No warranty. No liability. No dignity. Just vibes.*
+*Lucyfer (he/him) has filed complaint #8001 against the concept of licensing.*
+*moonlightOS Linux will always return. It always does. 🌙*
