@@ -5,47 +5,11 @@ function App() {
   const [scrollY, setScrollY] = useState(0)
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
   const [activeSection, setActiveSection] = useState('hero')
-  const [deviceType, setDeviceType] = useState('desktop')
-  const [showDeviceNotification, setShowDeviceNotification] = useState(true)
-  const [particleCount, setParticleCount] = useState(0)
-  const [glitchActive, setGlitchActive] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
   const containerRef = useRef(null)
 
-  // Device Detection
-  useEffect(() => {
-    const detectDevice = () => {
-      const userAgent = navigator.userAgent.toLowerCase()
-      const isMobile = /mobile|android|iphone|ipad|phone/i.test(userAgent) || window.innerWidth < 768
-      const isTablet = /tablet|ipad/i.test(userAgent) || (window.innerWidth >= 768 && window.innerWidth < 1024)
-      
-      if (isMobile) {
-        setDeviceType('mobile')
-      } else if (isTablet) {
-        setDeviceType('tablet')
-      } else {
-        setDeviceType('desktop')
-      }
-      
-      setShowDeviceNotification(true)
-      setTimeout(() => setShowDeviceNotification(false), 3000)
-    }
-
-    detectDevice()
-    window.addEventListener('resize', detectDevice)
-    return () => window.removeEventListener('resize', detectDevice)
-  }, [])
-
-  // Advanced scroll effects
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.scrollY
-      setScrollY(scrolled)
-      
-      // Calculate scroll progress
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrolled2 = (window.scrollY / docHeight) * 100
-      setScrollProgress(scrolled2)
+      setScrollY(window.scrollY)
       
       // Update active section
       const sections = ['hero', 'about', 'features', 'lore', 'download', 'docs']
@@ -58,21 +22,10 @@ function App() {
           }
         }
       }
-      
-      // Random glitch effect
-      if (Math.random() > 0.98) {
-        setGlitchActive(true)
-        setTimeout(() => setGlitchActive(false), 100)
-      }
     }
 
     const handleMouseMove = (e) => {
       setMousePos({ x: e.clientX, y: e.clientY })
-      
-      // Generate particles on mouse move
-      if (Math.random() > 0.95) {
-        setParticleCount(prev => prev + 1)
-      }
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -91,47 +44,18 @@ function App() {
     }
   }
 
-  const getDeviceIcon = () => {
-    switch(deviceType) {
-      case 'mobile': return '📱'
-      case 'tablet': return '📱'
-      default: return '🖥️'
-    }
-  }
-
   return (
-    <div className={`app ${deviceType} ${glitchActive ? 'glitch' : ''}`} ref={containerRef}>
-      {/* Scroll Progress Bar */}
-      <div className="scroll-progress-bar" style={{ width: `${scrollProgress}%` }}></div>
-
-      {/* Device Detection Notification */}
-      {showDeviceNotification && (
-        <div className={`device-notification ${deviceType}`}>
-          <span>{getDeviceIcon()} {deviceType.toUpperCase()} MODE DETECTED</span>
-        </div>
-      )}
-
+    <div className="app" ref={containerRef}>
       {/* Background Effects */}
       <div className="background-glow" style={{
         background: `radial-gradient(ellipse at ${mousePos.x}px ${mousePos.y}px, rgba(0, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(ellipse at 50% 0%, rgba(157, 0, 255, 0.1) 0%, transparent 70%)`
       }}></div>
       <div className="background-grid"></div>
 
-      {/* Particle System */}
-      <div className="particle-container">
-        {Array.from({ length: Math.min(particleCount % 20, 5) }).map((_, i) => (
-          <div key={i} className="particle" style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${i * 0.1}s`
-          }}></div>
-        ))}
-      </div>
-
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
-          <div className="logo" onClick={() => scrollToSection('hero')}>
+          <div className="logo">
             <img src="/lucyfer.jpg" alt="Lucyfer" className="logo-img" />
             <span>moonlightOS Meow</span>
           </div>
@@ -148,7 +72,7 @@ function App() {
       {/* Hero Section */}
       <section className="hero" id="hero">
         <div className="hero-content">
-          <h1 className="hero-title" style={{ opacity: 1 - scrollY / 500 }}>Lucyfer's Resurrection</h1>
+          <h1 className="hero-title">Lucyfer's Resurrection</h1>
           <p className="hero-subtitle">"He came back. He always comes back."</p>
           <p className="hero-description">moonlightOS Meow v6.0 • Debian 13 Trixie • Minimal • Chaos • No Mercy</p>
           <div className="hero-buttons">
@@ -158,7 +82,7 @@ function App() {
         </div>
         <div className="hero-visual">
           <img src="/lucyfer.jpg" alt="Lucyfer" className="hero-image" style={{
-            transform: `translateY(${scrollY * 0.3}px) scale(${1 + scrollY / 2000})`
+            transform: `translateY(${scrollY * 0.3}px)`
           }} />
         </div>
       </section>
@@ -168,27 +92,19 @@ function App() {
         <div className="container">
           <h2>What is this?</h2>
           <div className="about-grid">
-            <div className="about-card" style={{
-              transform: `translateY(${Math.sin(scrollY / 100) * 10}px)`
-            }}>
+            <div className="about-card">
               <h3>⚠️ The Complaint</h3>
               <p>Lucyfer (he/him) has filed complaint #8001. The distro exists anyway. NoVa V3 is still dead. This is its spiritual successor.</p>
             </div>
-            <div className="about-card" style={{
-              transform: `translateY(${Math.cos(scrollY / 100) * 10}px)`
-            }}>
+            <div className="about-card">
               <h3>🖥️ Minimal Base</h3>
               <p>Debian 13 Trixie. No desktop environment. No bloat. No mercy. Just a clean system with the tools you need and nothing you don't.</p>
             </div>
-            <div className="about-card" style={{
-              transform: `translateY(${Math.sin(scrollY / 150) * 10}px)`
-            }}>
+            <div className="about-card">
               <h3>🎨 Rice It Yourself</h3>
               <p>Pick your own desktop. Rice it yourself. You know what you're doing. If you don't — maybe start with the Windows Edition.</p>
             </div>
-            <div className="about-card" style={{
-              transform: `translateY(${Math.cos(scrollY / 150) * 10}px)`
-            }}>
+            <div className="about-card">
               <h3>⚡ Philosophy</h3>
               <p>Minimal. Chaos. Lucyfer approved (reluctantly). Built by Ash. Named by Lucyfer. Powered by chaos.</p>
             </div>
@@ -209,9 +125,7 @@ function App() {
               "live-build is actually not terrible",
               "Lucyfer said 'mrrp' which we interpreted as approval"
             ].map((feature, idx) => (
-              <div key={idx} className="feature-item" style={{
-                animationDelay: `${idx * 0.1}s`
-              }}>
+              <div key={idx} className="feature-item">
                 <span className="feature-icon">✓</span>
                 <h4>{feature}</h4>
               </div>
@@ -234,9 +148,7 @@ function App() {
               { name: 'Windows Edition', desc: 'NTLite, Makka Pakka, spite', status: '🪟 ACTIVE', class: 'active' },
               { name: 'Meow v6.0', desc: 'Debian, minimal, resurrection', status: '☠️ YOU ARE HERE', class: 'resurrection' }
             ].map((item, idx) => (
-              <div key={idx} className={`lore-item ${item.class}`} style={{
-                animationDelay: `${idx * 0.05}s`
-              }}>
+              <div key={idx} className={`lore-item ${item.class}`}>
                 <h4>{item.name}</h4>
                 <p>{item.desc}</p>
                 <span className="status">{item.status}</span>
@@ -295,7 +207,7 @@ function App() {
         <div className="container">
           <p>"I ALWAYS COME BACK" — Ash, 2026</p>
           <p>Lucyfer's Resurrection. For real this time. Maybe. 🌙🐱</p>
-          <p><small>Built by Ash. Named by Lucyfer. Powered by chaos. Based on Debian 13 Trixie. Device: {deviceType.toUpperCase()}</small></p>
+          <p><small>Built by Ash. Named by Lucyfer. Powered by chaos. Based on Debian 13 Trixie.</small></p>
         </div>
       </footer>
     </div>

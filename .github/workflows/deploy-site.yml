@@ -1,11 +1,12 @@
-name: 🌐 Deploy Landing Page to GitHub Pages
+name: Deploy moonlightOS Meow v6.0 Website
 
 on:
   push:
     branches:
-      - meow-ntlite
+      - meow-debian
     paths:
       - 'site-src/**'
+      - '.github/workflows/deploy-site.yml'
   workflow_dispatch:
 
 permissions:
@@ -14,46 +15,40 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
-    name: 🔨 Build React Site
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: meow-ntlite
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: site-src/package-lock.json
+          cache-dependency-path: 'site-src/package-lock.json'
 
       - name: Install dependencies
-        working-directory: site-src
-        run: npm ci
+        run: cd site-src && npm ci
 
-      - name: Build
-        working-directory: site-src
-        run: npm run build
+      - name: Build Vite project
+        run: cd site-src && npm run build
 
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site-src/dist
+          path: 'site-src/dist'
 
   deploy:
-    name: 🚀 Deploy to GitHub Pages
-    runs-on: ubuntu-latest
-    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
