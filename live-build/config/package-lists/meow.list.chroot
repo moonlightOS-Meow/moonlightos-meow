@@ -47,5 +47,4 @@ intel-microcode
 
 # Boot
 grub-efi-amd64
-grub-pc
 os-prober
