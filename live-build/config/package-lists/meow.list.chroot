@@ -39,7 +39,6 @@ debian-installer-launcher
 
 # Hardware support
 firmware-linux
-firmware-linux-nonfree
 firmware-iwlwifi
 firmware-realtek
 firmware-atheros
