@@ -232,7 +232,7 @@ main {
   position: relative;
 }
 .hero-cat {
-  width: min(600px, 90%);
+  width: min(800px, 95%);
   height: auto;
   filter: drop-shadow(0 0 40px rgba(192,132,252,0.4)) drop-shadow(0 0 80px rgba(244,114,182,0.2));
   animation: float 6s ease-in-out infinite;
