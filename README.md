@@ -1,21 +1,21 @@
 # moonlightOS Meow v6.0 "Lucyfer's Resurrection" 🐱☠️
-### *"He came back. He always comes back."*
+### *"He came back. He always comes back. Unfortunately."*
 
-> ⚠️ Lucyfer (he/him) has filed complaint #8001. The distro exists anyway.
-> NoVa V3 is still dead. This is its spiritual successor. Debian edition.
+> ⚠️ Lucyfer (he/him) has filed complaints #8001-#8847. We ignore him. The distro exists anyway.
+> NoVa V3 is still dead. Good riddance. This is its spiritual successor. Yeah, we're using Debian. Deal with it.
 
-**Built by Ash. Named by Lucyfer. Powered by chaos. Based on Debian 13 Trixie.**
+**Built by Ash. Reluctantly named by Lucyfer. Powered by spite and poor life choices. Based on Debian 13 Trixie because we got tired of Arch's nonsense.**
 
 ---
 
 ## What is this?
 
 moonlightOS Meow v6.0 is a minimal Debian 13 (Trixie) based live ISO.
-No desktop environment. No bloat. No mercy.
-Just a clean, minimal system with the tools you need and nothing you don't.
+No desktop environment. No bloat. **No bullshit.**
+Just a clean, minimal system with the tools you need and absolutely nothing else.
 
-Pick your own desktop. Rice it yourself. You know what you're doing.
-If you don't — maybe start with the Windows Edition.
+Pick your own desktop. Rice your own rice. If you actually know what you're doing.
+If you don't — honestly? Maybe just stick with Windows. This isn't for you. Or try the Windows Edition if you want to commit to the bit.
 
 - **Base:** Debian 13 "Trixie"
 - **Desktop:** None (bring your own)
@@ -28,23 +28,24 @@ If you don't — maybe start with the Windows Edition.
 
 ## Why Debian?
 
-- Arch was getting boring
-- Fedora/Nobara gave us PTSD (v4.0 era)
-- Windows Edition exists and that's already cursed enough
-- Debian 13 Trixie is stable and doesn't fight back
-- live-build is actually not terrible
-- Lucyfer said "mrrp" which we interpreted as approval
+- **Arch?** Boring. Predictable. Same recycled takes.
+- **Fedora/Nobara?** Gave us genuine PTSD. v4.0 was a mistake. We don't talk about it.
+- **Ubuntu?** Please no.
+- **Debian 13 Trixie?** Stable. Doesn't whine. Actually works. Revolutionary, we know.
+- **live-build?** Shockingly not garbage for once.
+- **Lucyfer's opinion?** He said "mrrp" at 3 AM. We took it as approval because he was already gone.
 
 ---
 
 ## Building the ISO
 
-### GitHub Actions (recommended)
-Trigger the **Build moonlightOS Meow v6.0 ISO** workflow from the Actions tab.
-Customize packages and compression before building.
-ISO available as downloadable artifact for 7 days.
+### GitHub Actions (the smart way)
+Go to Actions. Hit the **Build moonlightOS Meow v6.0 ISO** button. Wait. Don't touch anything.
+Customize packages and compression if you're feeling adventurous.
+ISO drops in 7 days as a downloadable artifact. You're welcome.
 
-### Local build (Debian/Ubuntu only)
+### Local build (Debian/Ubuntu only — no, really)
+You'll need Debian or Ubuntu. This won't work on your precious MacBook.
 ```bash
 sudo apt install live-build
 git clone https://github.com/moonlightOS-Meow/moonlightos-meow
@@ -53,6 +54,7 @@ git checkout meow-debian
 cd live-build
 sudo lb build
 ```
+Go make coffee. This takes a while. Don't ask for a progress bar.
 
 ---
 
@@ -73,9 +75,9 @@ sudo lb build
 ## License
 
 WTFPL v3 (Remastered Edition) — See [LICENSE.md](LICENSE.md)
-Do whatever. Lucyfer doesn't care. He's asleep.
+Do whatever you want. Lucyfer doesn't care. He's sleeping. Probably plotting revenge.
 
 ---
 
 *"I ALWAYS COME BACK" — Ash, 2026*
-*Lucyfer's Resurrection. For real this time. Maybe. 🌙🐱*
+*Lucyfer's Resurrection. For real this time. Probably. Send help. 🌙🐱☠️*
