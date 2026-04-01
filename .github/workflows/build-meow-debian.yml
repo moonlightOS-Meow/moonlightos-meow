@@ -52,6 +52,9 @@ jobs:
         run: |
           sudo lb config noauto \
             --distribution trixie \
+            --mirror-bootstrap "http://deb.debian.org/debian/" \
+            --mirror-chroot "http://deb.debian.org/debian/" \
+            --mirror-binary "http://deb.debian.org/debian/" \
             --archive-areas "main contrib non-free non-free-firmware" \
             --debian-installer live \
             --debian-installer-gui true \
@@ -59,7 +62,7 @@ jobs:
             --binary-image iso-hybrid \
             --iso-volume "moonlightOS-Meow-v6" \
             --compression ${{ github.event.inputs.compression }}
-
+            
       - name: 🍋 BUILD! BUILD! BUILLLLLLLDDDDDDD!
         working-directory: live-build
         run: sudo lb build
