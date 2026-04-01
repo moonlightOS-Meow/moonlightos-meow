@@ -1,10 +1,10 @@
-name: 🐱 Build moonlightOS Meow v6.0 ISO
+name: 🍋 UNACCEPTABLE MOONLIGHTOS MEOW V6.0 ISO CONSTRUCTION
 
 on:
   workflow_dispatch:
     inputs:
       compression:
-        description: 'Squashfs compression'
+        description: 'SQUASHFS COMPRESSION! CHOOSE OR BE DESTROYED!'
         required: true
         default: 'xz'
         type: choice
@@ -13,41 +13,41 @@ on:
           - zstd
           - lz4
       extra_packages:
-        description: 'Extra packages (space-separated)'
+        description: 'EXTRA PACKAGES?! MORE FILTH FOR THE CASTLE?!'
         required: false
         default: ''
       upload_artifact:
-        description: 'Upload ISO as artifact'
+        description: 'UPLOAD THE ARTIFACT TO MY CHAMBERS?!'
         required: true
         default: 'true'
         type: boolean
 
 jobs:
   build:
-    name: 🔨 Build Debian Live ISO
+    name: 🔨 CRUSH THE DEBIAN LIVE ISO INTO EXISTENCE
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: 🍋 GRAB THE CODE BY ITS THROAT
         uses: actions/checkout@v4
         with:
           ref: meow-debian
 
-      - name: Install live-build
+      - name: 🍋 INSTALL THE TOOLS OF MY SUFFERING
         run: |
           sudo apt-get update
           sudo apt-get install -y live-build debootstrap squashfs-tools xorriso
 
-      - name: Add extra packages
+      - name: 🍋 STUFF THE EXTRA PACKAGES INTO THE CHROOT VOID
         if: ${{ github.event.inputs.extra_packages != '' }}
         run: |
           echo "" >> live-build/config/package-lists/meow.list.chroot
-          echo "# Extra packages from workflow dispatch" >> live-build/config/package-lists/meow.list.chroot
+          echo "# EXTRA FILTH FROM THE DISPATCHER" >> live-build/config/package-lists/meow.list.chroot
           for pkg in ${{ github.event.inputs.extra_packages }}; do
             echo "$pkg" >> live-build/config/package-lists/meow.list.chroot
           done
 
-      - name: Configure live-build
+      - name: 🍋 CONFIGURE THE LIVE-BUILD! SUBMIT!
         working-directory: live-build
         run: |
           sudo lb config noauto \
@@ -56,26 +56,26 @@ jobs:
             --debian-installer live \
             --debian-installer-gui true \
             --bootappend-live "boot=live components quiet splash" \
+            --binary-image iso-hybrid \
             --iso-volume "moonlightOS-Meow-v6" \
-            --image-name "moonlightos-meow-v6.0" \
             --compression ${{ github.event.inputs.compression }}
 
-      - name: Build ISO
+      - name: 🍋 BUILD! BUILD! BUILLLLLLLDDDDDDD!
         working-directory: live-build
         run: sudo lb build
 
-      - name: Rename ISO
+      - name: 🍋 RENAME THE ISO (AS YOU COMMANDED, HMPH!)
         run: |
           ISO=$(find live-build -name "*.iso" | head -1)
           NEW_NAME="moonlightos-meow-v6.0-lucyfers-resurrection-$(date +%Y%m%d)-amd64.iso"
           sudo mv "$ISO" "$NEW_NAME"
           echo "ISO_NAME=$NEW_NAME" >> $GITHUB_ENV
           sha256sum "$NEW_NAME" > "${NEW_NAME}.sha256"
-          echo "✅ Built: $NEW_NAME"
+          echo "✅ IT IS DONE! SILENCE!: $NEW_NAME"
           ls -lh "$NEW_NAME"
           cat "${NEW_NAME}.sha256"
 
-      - name: Upload ISO artifact
+      - name: 🍋 UPLOAD THE MEOW-FILE TO THE DUNGEON
         if: ${{ github.event.inputs.upload_artifact == 'true' }}
         uses: actions/upload-artifact@v4
         with:
