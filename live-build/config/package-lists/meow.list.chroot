@@ -1,6 +1,3 @@
-# moonlightOS Meow v6.0 - Package List
-# Minimal. No desktop. Just chaos essentials.
-
 # Base system essentials
 bash
 coreutils
@@ -30,7 +27,7 @@ gparted
 vim
 nano
 htop
-neofetch
+fastfetch
 git
 tmux
 zip
