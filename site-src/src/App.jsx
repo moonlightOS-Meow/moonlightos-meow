@@ -1,307 +1,269 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
-import lucyferImg from './assets/lucyfer.jpg'
 import lucyferHead from './assets/lucyfer-head.png'
 
-function App() {
-  const [scrollY, setScrollY] = useState(0)
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [activeSection, setActiveSection] = useState('hero')
-  const [deviceType, setDeviceType] = useState('desktop')
-  const [showDeviceNotification, setShowDeviceNotification] = useState(true)
-  const [particleCount, setParticleCount] = useState(0)
-  const [glitchActive, setGlitchActive] = useState(false)
-  const [scrollProgress, setScrollProgress] = useState(0)
-  const containerRef = useRef(null)
+const LORE = [
+  { name: 'AshOS v1', desc: 'Kubuntu remaster. Born from a tablet fire.', status: 'DEAD', cls: 'dead' },
+  { name: 'Phoenix v1.0 → v2.0', desc: 'Born after rm -rf disaster. GRUB said "FUCK CALAMARES".', status: 'ARCHIVED', cls: 'dead' },
+  { name: 'NoVa V3', desc: '730+ commits. 0 bootable ISOs. S3RL bait legacy.', status: 'DEAD', cls: 'dead' },
+  { name: 'Meow v4.0', desc: 'Fedora/Nobara era. Kickstart + lorax. Gone but not forgotten.', status: 'RIP', cls: 'dead' },
+  { name: "Meow v5.0 \"Lucyfer's Revenge\"", desc: 'Arch-based. Openbox. Villain arc fully activated.', status: 'ALIVE', cls: 'alive' },
+  { name: 'Meow Windows Edition', desc: 'NTLite debloat. GlazeWM. Makka Pakka. Temporary setback.', status: 'ACTIVE', cls: 'active' },
+  { name: 'Meow v6.0 ← you are here', desc: 'Debian 13 Trixie. Minimal. No desktop. Lucyfer\'s Resurrection.', status: 'YOU ARE HERE', cls: 'resurrection' },
+]
 
-  // Device Detection
+const FEATURES = [
+  { icon: '✓', text: 'Arch was getting boring' },
+  { icon: '✓', text: 'Fedora/Nobara gave us PTSD (v4.0 era)' },
+  { icon: '✓', text: 'Windows Edition exists and that\'s already cursed enough' },
+  { icon: '✓', text: 'Debian 13 Trixie is stable and doesn\'t fight back' },
+  { icon: '✓', text: 'live-build is actually not terrible' },
+  { icon: '✓', text: 'Lucyfer said "mrrp" which we interpreted as approval' },
+]
+
+function useDevice() {
+  const [device, setDevice] = useState('desktop')
   useEffect(() => {
-    const detectDevice = () => {
-      const userAgent = navigator.userAgent.toLowerCase()
-      const isMobile = /mobile|android|iphone|ipad|phone/i.test(userAgent) || window.innerWidth < 768
-      const isTablet = /tablet|ipad/i.test(userAgent) || (window.innerWidth >= 768 && window.innerWidth < 1024)
-      
-      if (isMobile) {
-        setDeviceType('mobile')
-      } else if (isTablet) {
-        setDeviceType('tablet')
-      } else {
-        setDeviceType('desktop')
-      }
-      
-      setShowDeviceNotification(true)
-      setTimeout(() => setShowDeviceNotification(false), 3000)
+    const detect = () => {
+      const w = window.innerWidth
+      setDevice(w < 768 ? 'mobile' : w < 1024 ? 'tablet' : 'desktop')
     }
+    detect()
+    window.addEventListener('resize', detect)
+    return () => window.removeEventListener('resize', detect)
+  }, [])
+  return device
+}
 
-    detectDevice()
-    window.addEventListener('resize', detectDevice)
-    return () => window.removeEventListener('resize', detectDevice)
+function useScrollProgress() {
+  const [progress, setProgress] = useState(0)
+  useEffect(() => {
+    const handler = () => {
+      const h = document.documentElement.scrollHeight - window.innerHeight
+      setProgress(h > 0 ? (window.scrollY / h) * 100 : 0)
+    }
+    window.addEventListener('scroll', handler)
+    return () => window.removeEventListener('scroll', handler)
+  }, [])
+  return progress
+}
+
+export default function App() {
+  const device = useDevice()
+  const progress = useScrollProgress()
+  const [activeSection, setActiveSection] = useState('hero')
+  const [showNotif, setShowNotif] = useState(true)
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowNotif(false), 3000)
+    return () => clearTimeout(timer)
   }, [])
 
-  // Advanced scroll effects
   useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY
-      setScrollY(scrolled)
-      
-      // Calculate scroll progress
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrolled2 = (window.scrollY / docHeight) * 100
-      setScrollProgress(scrolled2)
-      
-      // Update active section
+    const handler = () => {
+      setScrollY(window.scrollY)
       const sections = ['hero', 'about', 'features', 'lore', 'download', 'docs']
-      for (let section of sections) {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          if (rect.top <= 200) {
-            setActiveSection(section)
-          }
+      for (const id of sections) {
+        const el = document.getElementById(id)
+        if (el) {
+          const rect = el.getBoundingClientRect()
+          if (rect.top <= 120 && rect.bottom > 120) { setActiveSection(id); break }
         }
       }
-      
-      // Random glitch effect
-      if (Math.random() > 0.98) {
-        setGlitchActive(true)
-        setTimeout(() => setGlitchActive(false), 100)
-      }
     }
-
-    const handleMouseMove = (e) => {
-      setMousePos({ x: e.clientX, y: e.clientY })
-      
-      // Generate particles on mouse move
-      if (Math.random() > 0.95) {
-        setParticleCount(prev => prev + 1)
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    window.addEventListener('mousemove', handleMouseMove)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-      window.removeEventListener('mousemove', handleMouseMove)
-    }
+    window.addEventListener('scroll', handler)
+    return () => window.removeEventListener('scroll', handler)
   }, [])
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-    }
-  }
-
-  const getDeviceIcon = () => {
-    switch(deviceType) {
-      case 'mobile': return '📱'
-      case 'tablet': return '📱'
-      default: return '🖥️'
-    }
-  }
+  const scrollTo = id => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
-    <div className={`app ${deviceType} ${glitchActive ? 'glitch' : ''}`} ref={containerRef}>
-      {/* Scroll Progress Bar */}
-      <div className="scroll-progress-bar" style={{ width: `${scrollProgress}%` }}></div>
+    <>
+      {/* bg layers */}
+      <div className="grid-bg" />
+      <div className="orbs">
+        <div className="orb" style={{ width: 700, height: 700, left: '-15%', top: '-20%', background: 'radial-gradient(circle, rgba(192,132,252,0.07), transparent 70%)' }} />
+        <div className="orb" style={{ width: 500, height: 500, right: '-10%', top: '20%', background: 'radial-gradient(circle, rgba(244,114,182,0.05), transparent 70%)' }} />
+        <div className="orb" style={{ width: 600, height: 600, left: '10%', bottom: '10%', background: 'radial-gradient(circle, rgba(34,211,238,0.04), transparent 70%)' }} />
+      </div>
 
-      {/* Device Detection Notification */}
-      {showDeviceNotification && (
-        <div className={`device-notification ${deviceType}`}>
-          <span>{getDeviceIcon()} {deviceType.toUpperCase()} MODE DETECTED</span>
+      {/* scroll bar */}
+      <div className="scroll-bar" style={{ transform: `scaleX(${progress / 100})` }} />
+
+      {/* device notification */}
+      {showNotif && (
+        <div className="device-notif">
+          {device === 'mobile' ? '📱' : device === 'tablet' ? '📱' : '🖥️'} {device.toUpperCase()} MODE
         </div>
       )}
 
-      {/* Background Effects */}
-      <div className="background-glow" style={{
-        background: `radial-gradient(ellipse at ${mousePos.x}px ${mousePos.y}px, rgba(0, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(ellipse at 50% 0%, rgba(157, 0, 255, 0.1) 0%, transparent 70%)`
-      }}></div>
-      <div className="background-grid"></div>
-
-      {/* Particle System */}
-      <div className="particle-container">
-        {Array.from({ length: Math.min(particleCount % 20, 5) }).map((_, i) => (
-          <div key={i} className="particle" style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${i * 0.1}s`
-          }}></div>
-        ))}
-      </div>
-
-      {/* Navigation */}
+      {/* navbar */}
       <nav className="navbar">
-        <div className="nav-container">
-          <div className="logo" onClick={() => scrollToSection('hero')}>
-            <img src={lucyferImg} alt="Lucyfer" className="logo-img" />
-            <span>moonlightOS Meow</span>
-          </div>
+        <div className="nav-inner">
+          <a className="logo" onClick={() => scrollTo('hero')}>
+            <img src={lucyferHead} alt="Lucyfer" className="logo-img" />
+            <span className="logo-text">moonlightOS <span>Meow</span></span>
+          </a>
           <ul className="nav-links">
-            <li><a onClick={() => scrollToSection('about')} className={activeSection === 'about' ? 'active' : ''}>About</a></li>
-            <li><a onClick={() => scrollToSection('features')} className={activeSection === 'features' ? 'active' : ''}>Features</a></li>
-            <li><a onClick={() => scrollToSection('download')} className={activeSection === 'download' ? 'active' : ''}>Download</a></li>
-            <li><a onClick={() => scrollToSection('docs')} className={activeSection === 'docs' ? 'active' : ''}>Docs</a></li>
-            <li><a href="https://github.com/moonlightOS-Meow/moonlightos-meow" target="_blank" rel="noreferrer">GitHub</a></li>
+            {['about','features','lore','download','docs'].map(s => (
+              <li key={s}><a onClick={() => scrollTo(s)} className={activeSection === s ? 'active' : ''}>{s.charAt(0).toUpperCase()+s.slice(1)}</a></li>
+            ))}
+            <li><a href="https://github.com/moonlightOS-Meow/moonlightos-meow" target="_blank" rel="noreferrer" className="github-link">GitHub</a></li>
           </ul>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="hero" id="hero">
-        <div className="hero-content">
-          <h1 className="hero-title" style={{ opacity: 1 - scrollY / 500 }}>Lucyfer's Resurrection</h1>
-          <p className="hero-subtitle">"He came back. He always comes back."</p>
-          <p className="hero-description">moonlightOS Meow v6.0 • Debian 13 Trixie • Minimal • Chaos • No Mercy</p>
-          <div className="hero-buttons">
-            <button onClick={() => scrollToSection('download')} className="btn btn-primary">Download ISO</button>
-            <a href="https://github.com/moonlightOS-Meow/moonlightos-meow" className="btn btn-secondary">View on GitHub</a>
-          </div>
-        </div>
-        <div className="hero-visual">
-          <img src={lucyferHead} alt="Lucyfer" className="hero-image" style={{
-            transform: `translateY(${scrollY * 0.3}px) scale(${1 + scrollY / 2000})`
-          }} />
-        </div>
-      </section>
+      <main>
+        {/* ── HERO ── */}
+        <section id="hero" className="hero">
+          <div className="hero-inner">
+            <div className="hero-content">
+              <div className="hero-eyebrow">
+                {[
+                  { text: 'Debian 13', color: '#0078d4' },
+                  { text: 'Minimal', color: '#c084fc' },
+                  { text: 'Named by Lucyfer', color: '#f472b6' },
+                  { text: 'v6.0', color: '#22c55e' },
+                ].map(b => (
+                  <span key={b.text} className="badge" style={{ border: `1px solid ${b.color}`, color: b.color, background: `${b.color}12` }}>{b.text}</span>
+                ))}
+              </div>
+              <h1 className="hero-title">Lucyfer's<br/>Resurrection</h1>
+              <p className="hero-subtitle">"He came back. He always comes back."</p>
+              <p className="hero-desc">
+                moonlightOS Meow v6.0 — Debian 13 Trixie based minimal live ISO.
+                No desktop environment. No bloat. No mercy.
+                Just a clean system and the tools you need.
+              </p>
+              <div className="hero-buttons">
+                <button onClick={() => scrollTo('download')} className="btn btn-primary">↓ Download ISO</button>
+                <a href="https://github.com/moonlightOS-Meow/moonlightos-meow" target="_blank" rel="noreferrer" className="btn btn-secondary">View on GitHub</a>
+              </div>
+            </div>
 
-      {/* About Section */}
-      <section className="about" id="about">
-        <div className="container">
+            <div className="hero-visual">
+              <div className="hero-ring" style={{ width: 320, height: 320 }} />
+              <div className="hero-ring" style={{ width: 420, height: 420, animationDuration: '30s', animationDirection: 'reverse' }} />
+              <img
+                src={lucyferHead}
+                alt="Lucyfer - Head of QA"
+                className="hero-cat"
+                style={{ transform: `translateY(${scrollY * 0.05}px)` }}
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ── ABOUT ── */}
+        <section id="about">
+          <div className="section-label"><span>// about</span></div>
           <h2>What is this?</h2>
           <div className="about-grid">
-            <div className="about-card" style={{
-              transform: `translateY(${Math.sin(scrollY / 100) * 10}px)`
-            }}>
-              <h3>⚠️ The Complaint</h3>
-              <p>Lucyfer (he/him) has filed complaint #8001. The distro exists anyway. NoVa V3 is still dead. This is its spiritual successor.</p>
-            </div>
-            <div className="about-card" style={{
-              transform: `translateY(${Math.cos(scrollY / 100) * 10}px)`
-            }}>
-              <h3>🖥️ Minimal Base</h3>
-              <p>Debian 13 Trixie. No desktop environment. No bloat. No mercy. Just a clean system with the tools you need and nothing you don't.</p>
-            </div>
-            <div className="about-card" style={{
-              transform: `translateY(${Math.sin(scrollY / 150) * 10}px)`
-            }}>
-              <h3>🎨 Rice It Yourself</h3>
-              <p>Pick your own desktop. Rice it yourself. You know what you're doing. If you don't — maybe start with the Windows Edition.</p>
-            </div>
-            <div className="about-card" style={{
-              transform: `translateY(${Math.cos(scrollY / 150) * 10}px)`
-            }}>
-              <h3>⚡ Philosophy</h3>
-              <p>Minimal. Chaos. Lucyfer approved (reluctantly). Built by Ash. Named by Lucyfer. Powered by chaos.</p>
-            </div>
+            {[
+              { icon: '⚠️', title: 'The Complaint', desc: 'Lucyfer (he/him) has filed complaint #8001. The distro exists anyway. NoVa V3 is still dead. This is its spiritual successor.' },
+              { icon: '🖥️', title: 'Minimal Base', desc: 'Debian 13 Trixie. No desktop environment. No bloat. No mercy. Just a clean system with the tools you need.' },
+              { icon: '🎨', title: 'Rice It Yourself', desc: 'Pick your own desktop. Rice it yourself. You know what you\'re doing. If you don\'t — maybe start with the Windows Edition.' },
+              { icon: '⚡', title: 'Philosophy', desc: 'Minimal. Chaos. Lucyfer approved (reluctantly). Built by Ash. Named by Lucyfer. Powered by chaos.' },
+            ].map(c => (
+              <div className="about-card" key={c.title}>
+                <h3>{c.icon} {c.title}</h3>
+                <p>{c.desc}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Features Section */}
-      <section className="features" id="features">
-        <div className="container">
+        {/* ── FEATURES ── */}
+        <section id="features">
+          <div className="section-label"><span>// why debian</span></div>
           <h2>Why Debian?</h2>
           <div className="features-list">
-            {[
-              "Arch was getting boring",
-              "Fedora/Nobara gave us PTSD (v4.0 era)",
-              "Windows Edition exists and that's already cursed enough",
-              "Debian 13 Trixie is stable and doesn't fight back",
-              "live-build is actually not terrible",
-              "Lucyfer said 'mrrp' which we interpreted as approval"
-            ].map((feature, idx) => (
-              <div key={idx} className="feature-item" style={{
-                animationDelay: `${idx * 0.1}s`
-              }}>
-                <span className="feature-icon">✓</span>
-                <h4>{feature}</h4>
+            {FEATURES.map((f, i) => (
+              <div className="feature-item" key={i}>
+                <div className="feature-icon">{f.icon}</div>
+                <h4>{f.text}</h4>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Lore Section */}
-      <section className="lore" id="lore">
-        <div className="container">
+        {/* ── LORE ── */}
+        <section id="lore">
+          <div className="section-label"><span>// version lore</span></div>
           <h2>Version Lore</h2>
           <div className="lore-timeline">
-            {[
-              { name: 'AshOS v1', desc: 'Kubuntu remaster, born from chaos', status: '💀 DEAD', class: 'dead' },
-              { name: 'Phoenix v1-v2', desc: 'rm -rf survivor, GRUB trauma', status: '💀 ARCHIVED', class: 'dead' },
-              { name: 'NoVa V3', desc: '730+ commits, 0 ISOs, legend', status: '💀 DEAD', class: 'dead' },
-              { name: 'Meow v4.0', desc: 'Fedora era, kickstart hell', status: '💀 RIP', class: 'dead' },
-              { name: 'Meow v5.0', desc: 'Arch, Openbox, villain arc', status: '✅ ALIVE', class: 'alive' },
-              { name: 'Windows Edition', desc: 'NTLite, Makka Pakka, spite', status: '🪟 ACTIVE', class: 'active' },
-              { name: 'Meow v6.0', desc: 'Debian, minimal, resurrection', status: '☠️ YOU ARE HERE', class: 'resurrection' }
-            ].map((item, idx) => (
-              <div key={idx} className={`lore-item ${item.class}`} style={{
-                animationDelay: `${idx * 0.05}s`
-              }}>
-                <h4>{item.name}</h4>
-                <p>{item.desc}</p>
-                <span className="status">{item.status}</span>
+            {LORE.map((item, i) => (
+              <div className={`lore-item ${item.cls}`} key={i}>
+                <div className="lore-dot" />
+                <div className="lore-name">
+                  <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 13 }}>{item.name}</span>
+                  <span className="lore-status">{item.status}</span>
+                </div>
+                <p className="lore-desc">{item.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Download Section */}
-      <section className="download" id="download">
-        <div className="container">
-          <h2>Download</h2>
+        {/* ── DOWNLOAD ── */}
+        <section id="download">
+          <div className="section-label"><span>// download</span></div>
+          <h2>Get the ISO</h2>
           <div className="download-grid">
             <div className="download-card">
               <h3>GitHub Actions</h3>
-              <p>Recommended. Trigger the Build workflow from the Actions tab. ISO available as artifact for 7 days.</p>
-              <a href="https://github.com/moonlightOS-Meow/moonlightos-meow/actions" className="btn btn-secondary">Build ISO</a>
+              <p>Recommended. Trigger the Build workflow from the Actions tab. ISO available as artifact for 7 days. Choose your compression and extra packages.</p>
+              <a href="https://github.com/moonlightOS-Meow/moonlightos-meow/actions" target="_blank" rel="noreferrer" className="btn btn-secondary">Build ISO</a>
             </div>
             <div className="download-card">
               <h3>Local Build</h3>
-              <p>Debian/Ubuntu only. Requires live-build. Clone the repo and run <code>sudo lb build</code> in live-build/</p>
-              <a href="https://github.com/moonlightOS-Meow/moonlightos-meow" className="btn btn-secondary">Clone Repo</a>
+              <p>Debian/Ubuntu only. Requires <code>live-build</code>. Clone the repo, checkout <code>meow-debian</code>, run <code>sudo lb build</code> in the live-build directory.</p>
+              <a href="https://github.com/moonlightOS-Meow/moonlightos-meow/tree/meow-debian" target="_blank" rel="noreferrer" className="btn btn-secondary">Clone Repo</a>
             </div>
             <div className="download-card">
               <h3>Releases</h3>
-              <p>Stable releases available on GitHub. Check the releases page for latest ISO builds.</p>
-              <a href="https://github.com/moonlightOS-Meow/moonlightos-meow/releases" className="btn btn-secondary">View Releases</a>
+              <p>Stable releases on GitHub when they exist. Check the releases page. ISO builds are uploaded after successful Actions runs.</p>
+              <a href="https://github.com/moonlightOS-Meow/moonlightos-meow/releases" target="_blank" rel="noreferrer" className="btn btn-secondary">View Releases</a>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Docs Section */}
-      <section className="docs" id="docs">
-        <div className="container">
+        {/* ── DOCS ── */}
+        <section id="docs">
+          <div className="section-label"><span>// documentation</span></div>
           <h2>Documentation</h2>
           <div className="docs-grid">
             {[
               { title: 'README', desc: 'Full project documentation and philosophy' },
-              { title: 'CHANGELOG', desc: 'Version history and updates' },
-              { title: 'CONTRIBUTING', desc: 'How to contribute to the project' },
-              { title: 'LICENSE', desc: 'WTFPL v3 - Do whatever you want' }
-            ].map((doc, idx) => (
-              <div key={idx} className="doc-card">
-                <h3>{doc.title}</h3>
-                <p>{doc.desc}</p>
+              { title: 'CHANGELOG', desc: 'History of suffering and questionable decisions' },
+              { title: 'CONTRIBUTING', desc: 'Don\'t. Please. Just run.' },
+              { title: 'LICENSE', desc: 'WTFPL v3 Remastered — do whatever you want' },
+            ].map(d => (
+              <div className="doc-card" key={d.title}>
+                <h3>{d.title}</h3>
+                <p>{d.desc}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <p>"I ALWAYS COME BACK" — Ash, 2026</p>
-          <p>Lucyfer's Resurrection. For real this time. Maybe. 🌙🐱</p>
-          <p><small>Built by Ash. Named by Lucyfer. Powered by chaos. Based on Debian 13 Trixie. Device: {deviceType.toUpperCase()}</small></p>
+      {/* ── FOOTER ── */}
+      <footer>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 32px' }}>
+          <div className="footer-title">moonlightOS Meow</div>
+          <div className="footer-sub">
+            Named by Lucyfer (he/him). Powered by chaos. Based on Debian 13 Trixie.<br/>
+            "I ALWAYS COME BACK" — Ash, 2026 · NoVa V3 stays dead. · Linux will always return. 🌙
+          </div>
+          <div className="footer-links">
+            <a href="https://github.com/moonlightOS-Meow/moonlightos-meow" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://github.com/moonlightOS-Meow/moonlightos-meow/releases" target="_blank" rel="noreferrer">Releases</a>
+            <a href="https://github.com/moonlightOS-Meow/moonlightos-meow/tree/meow-ntlite" target="_blank" rel="noreferrer">Windows Edition</a>
+          </div>
         </div>
       </footer>
-    </div>
+    </>
   )
 }
-
-export default App
