@@ -26,6 +26,10 @@ jobs:
   build:
     name: 🔨 CRUSH THE DEBIAN LIVE ISO INTO EXISTENCE
     runs-on: ubuntu-latest
+    container:
+      image: debian-trixie
+      options: --prvileged
+    
 
     steps:
       - name: 🍋 GRAB THE CODE BY ITS THROAT
