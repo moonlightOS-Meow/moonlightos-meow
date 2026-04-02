@@ -26,10 +26,6 @@ jobs:
   build:
     name: 🔨 CRUSH THE DEBIAN LIVE ISO INTO EXISTENCE
     runs-on: ubuntu-latest
-    container:
-      image: debian-trixie
-      options: --prvileged
-    
 
     steps:
       - name: 🍋 GRAB THE CODE BY ITS THROAT
@@ -71,7 +67,7 @@ jobs:
             --binary-image iso-hybrid \
             --iso-volume "moonlightOS-Meow-v6" \
             --compression ${{ github.event.inputs.compression }}
-
+            
       - name: 🍋 BUILD! BUILD! BUILLLLLLLDDDDDDD!
         working-directory: live-build
         run: sudo lb build
