@@ -47,7 +47,7 @@ jobs:
             echo "$pkg" >> live-build/config/package-lists/meow.list.chroot
           done
 
-        - name: 🍋 CONFIGURE THE LIVE-BUILD! SUBMIT!
+      - name: 🍋 CONFIGURE THE LIVE-BUILD! SUBMIT!
         working-directory: live-build
         run: |
           sudo lb config noauto \
