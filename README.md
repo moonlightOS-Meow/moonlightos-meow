@@ -37,7 +37,27 @@ If you don't — honestly? Maybe just stick with Windows. This isn't for you. Or
 
 ---
 
-## Building the ISO
+## Download The ISO (Finally, A Normal Section)
+
+### Pre-Built ISO (For People Who Value Time)
+
+**GitHub Releases** — Because it's free, integrated, and doesn't require a MEGA account. Plus our ISO is actually slim like we said.
+
+🔗 **[Download from GitHub Releases](https://github.com/moonlightOS-Meow/moonlightos-meow/releases)**
+
+- **Size:** ~800MB - 1.5GB (minimal as fuck, remember?)
+- **SHA256:** Included with every release. Verify your shit.
+- **Why GitHub Releases?** It's under 2GB. It's free. It's right here. No MEGA account needed.
+
+> ⚠️ **ALWAYS DOWNLOAD THE LATEST RELEASE!** There's also a **Windows Edition** ISO floating around. Make sure you're grabbing **moonlightOS Meow v6.0 "Lucyfer's Resurrection"** (Debian-based, minimal, no DE) and not the Windows Edition unless that's what you actually want. They're different things. Don't @ us.
+
+> 🚨 **DOWNLOADED THE WINDOWS EDITION BY MISTAKE?** If you installed that ugly ISO and now you're here asking for help — **we don't support that.** That's not this project. If you installed it: **DELETE IT. FORMAT THE FUCKING DRIVE.** Start over with this one. We warned you. They're not compatible. We don't have the tools or the patience to fix Windows Edition mistakes.
+
+*ISO built via GitHub Actions, uploaded to Releases automatically (or manually, depending on how lazy we're feeling).*
+
+---
+
+## Building the ISO Yourself (Why Though?)
 
 ### GitHub Actions (the smart way)
 Go to Actions. Hit the **Build moonlightOS Meow v6.0 ISO** button. Wait. Don't touch anything.
