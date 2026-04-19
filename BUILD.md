@@ -1,117 +1,80 @@
-# Building moonlightOS Meow v6.0
+# Building moonlightOS v7.0
 
 ## 🖥️ System Requirements
 
-- **Ubuntu 22.04 LTS or later** (or any Debian-based system)
+- **Arch Linux** (or any Arch-based system like EndeavourOS, Manjaro, pearlOS)
 - **8GB RAM minimum** (16GB+ recommended)
-- **20GB free disk space minimum** (live-build can use 50GB during compilation)
+- **30GB free disk space** (archiso uses a lot during build)
 - **sudo access** (required for building)
 
-## 📦 Automatic Installation (Recommended)
+## 📦 Installation
 
-### On Ubuntu via GitHub Actions
-
-1. Go to **Actions** tab
-2. Select **🐱 Build moonlightOS Meow v6.0 ISO**
-3. Click **Run workflow**
-4. Configure options:
-   - **Compression**: xz (default), zstd, or lz4
-   - **Extra packages**: space-separated list (optional)
-   - **Upload artifact**: true
-5. Wait for build to complete (~30-45 minutes)
-6. Download ISO from artifacts (available 7 days)
-
-### Local Build (Ubuntu/Debian)
-
-#### Quick Start
-```bash
-sudo ./build-local.sh
-```
-
-#### With Custom Compression
-```bash
-sudo ./build-local.sh zstd
-```
-
-#### With Extra Packages
-```bash
-sudo ./build-local.sh xz "vim git curl"
-```
-
-## 🔧 Manual Build
-
-If you prefer to control every step:
+### Install archiso
 
 ```bash
-# Install dependencies
-sudo apt-get update
-sudo apt-get install -y live-build debootstrap squashfs-tools xorriso
-
-# Navigate to build directory
-cd live-build
-
-# Make scripts executable
-chmod +x auto/config auto/build auto/clean
-
-# Clean any previous builds
-sudo ./auto/clean --all
-
-# Configure
-sudo ./auto/config --compression xz
-
-# Build
-sudo ./auto/build
-
-# Find your ISO
-ls -lh *.iso
+sudo pacman -S archiso
 ```
 
-## 📝 Customization
+## 🔨 Building
+
+### Quick Build (Default)
+
+```bash
+cd moonlightos-meow
+sudo mkarchiso -v -w /tmp/iso -o ./out releng
+```
+
+### Custom Build Options
+
+```bash
+# Verbose build with custom work directory
+sudo mkarchiso -v -w /tmp/mybuild -o ./output releng
+```
+
+### Output
+
+The ISO will be in `./out/`:
+- `moonlightos-YYYY.MM.DD-x86_64.iso`
+
+## ⚙️ Customization
 
 ### Adding Packages
 
-Edit `live-build/config/package-lists/meow.list.chroot`:
+Edit `releng/packages.x86_64`:
 ```
 # Add one package per line
 vim
 git
-curl
-firefox
+neofetch
 ```
 
-### Modifying Boot Parameters
+### Modifying Boot
 
-Edit `live-build/auto/config`:
-- Change `--bootappend-live` for kernel parameters
-- Change `--compression` for different compression (xz/zstd/lz4)
+Edit `releng/profiledef.sh`:
+- `iso_name` - ISO filename
+- `iso_label` - Volume label
+- `iso_publisher` - Publisher info
 
-### Custom Hooks
+### Custom airootfs
 
-Place shell scripts in `live-build/config/hooks/` to run during ISO build
+Add files to `releng/airootfs/` - they will be included in the live system.
 
 ## 🚀 Usage
 
-Once built:
-
 1. Write ISO to USB:
    ```bash
-   sudo dd if=moonlightos-meow-v6.0-*.iso of=/dev/sdX bs=4M conv=fsync
+   sudo dd if=moonlightos-*.iso of=/dev/sdX bs=4M conv=fsync
    ```
 
-2. Or burn with Etcher/Ventoy
+2. Or use Ventoy/Rufus
 
-3. Boot and run Debian installer (no desktop pre-installed - bring your own)
+3. Boot and install with Calamares (if included) or manual chroot
 
 ## 🐛 Troubleshooting
 
-### "Permission denied" on auto scripts
+### "Command not found: mkarchiso"
 ```bash
-chmod +x live-build/auto/*
-```
-
-### Build fails with "debootstrap not found"
-```bash
-sudo apt-get install debootstrap
+sudo pacman -S archiso
 ```
 
 ### Out of disk space
@@ -119,28 +82,25 @@ sudo apt-get install debootstrap
 - Use external drive
 - Check with: `df -h`
 
-### ISO not found after build
-- Check build output for errors
-- Ensure squashfs-tools is installed
-- Try manual build with verbose output:
-  ```bash
-  sudo lb build --verbose
-  ```
+### Build fails
+- Check pacman.conf in releng/
+- Ensure network connectivity for package downloads
+- Try: `sudo mkarchiso -v -w /tmp/iso -o ./out releng 2>&1 | tail -50`
 
 ## 📊 Build Times (Approximate)
 
-- **First build**: 45-60 minutes
-- **Subsequent builds**: 30-45 minutes (cached)
-- **With extra packages**: +5-15 minutes per package
+- **First build**: 20-40 minutes
+- **Subsequent builds**: 10-20 minutes (cached)
+- **With KDE packages**: +10-20 minutes
 
 ## 🎯 What's Included
 
-- Debian 13 "Trixie" minimal base
-- No desktop environment (bring your own)
-- Debian installer (live variant)
-- Essential tools only
-- ~700MB ISO
+- Arch Linux base
+- KDE Plasma Desktop
+- Essential GUI tools
+- Rolling release (you break it, you fix it)
 
 ---
 
-*Built by Ash. Named by Lucyfer. Powered by chaos. 🌙🐱*
+*Built by Ash. Named by Lucifer. Powered by rice. 🌙🐱*
+*v7.0 - The Return*
