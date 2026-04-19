@@ -1,0 +1,69 @@
+name: 🐱 BUILD MOONLIGHTOS v7.0 ISO
+
+on:
+  workflow_dispatch:
+    inputs:
+      compression:
+        description: 'SquashFS Compression'
+        required: true
+        default: 'xz'
+        type: choice
+        options:
+          - xz
+          - zstd
+          - lz4
+      extra_packages:
+        description: 'Extra packages (space separated)'
+        required: false
+        default: ''
+
+jobs:
+  build:
+    name: 🔨 Build ISO
+    runs-on: arch-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: 🐱 Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: v7.0
+
+      - name: 🐱 Install archiso
+        run: sudo pacman -Syu --noconfirm archiso
+
+      - name: 🐱 Add extra packages
+        if: ${{ github.event.inputs.extra_packages != '' }}
+        run: |
+          echo "" >> releng/packages.x86_64
+          echo "# Extra packages from workflow" >> releng/packages.x86_64
+          for pkg in ${{ github.event.inputs.extra_packages }}; do
+            echo "$pkg" >> releng/packages.x86_64
+          done
+
+      - name: 🐱 Build ISO
+        run: |
+          sudo mkarchiso -v -w /tmp/iso -o ./out releng
+
+      - name: 🐱 Rename and checksum
+        run: |
+          ISO=$(find out -name "*.iso" | head -1)
+          if [ -z "$ISO" ]; then
+            echo "ERROR: No ISO found"
+            exit 1
+          fi
+          NEW_NAME="moonlightos-v7.0-$(date +%Y%m%d)-x86_64.iso"
+          mv "$ISO" "$NEW_NAME"
+          echo "ISO_NAME=$NEW_NAME" >> $GITHUB_ENV
+          sha256sum "$NEW_NAME" > "${NEW_NAME}.sha256"
+          echo "✅ Built: $NEW_NAME"
+          ls -lh "$NEW_NAME"
+
+      - name: 🐱 Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: moonlightos-v7.0-${{ github.run_number }}
+          path: |
+            moonlightos-v7.0-*.iso
+            moonlightos-v7.0-*.sha256
+          retention-days: 7
