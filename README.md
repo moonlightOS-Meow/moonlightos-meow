@@ -101,7 +101,7 @@ A: Maybe. Make backups.
 | v2 (Phoenix) | Arch | ?? | 💀 ARCHIVED |
 | v3 (NoVa) | Fedora | None | 💀 DEAD |
 | v4 | Fedora | i3 | 🏷️ legacy-v4 |
-| v5 | Arch | Openbox | 🏷️ legacy-v6 |
+| v5 | Arch | Openbox | 💀 DELETED (oops) |
 | v6 | Debian | None | 🏷️ legacy-meow-debian |
 | v6 Windows | Windows 11 | GlazeWM | 🏷️ legacy-ntlite |
 | **v7** | **Arch** | **KDE Plasma** | **✅ YOU ARE HERE** |
