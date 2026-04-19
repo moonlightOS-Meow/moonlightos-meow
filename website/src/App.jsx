@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
 import './App.css'
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
     const interval = setInterval(() => {
       setGlitch(true)
       setTimeout(() => setGlitch(false), 100)
-    }, 3000)
+    }, 4000)
     return () => clearInterval(interval)
   }, [])
 
@@ -17,46 +18,97 @@ function App() {
       <div className="scanline"></div>
       
       <header className="hero">
-        <div className="moon">🌙</div>
-        <h1 className={`title ${glitch ? 'glitch' : ''}`}>moonlightOS</h1>
-        <p className="subtitle">v7.0 — "The Return"</p>
-        <p className="tagline">Arch-based KDE Plasma. Rolling release. NO HANDHOLDING.</p>
+        <motion.div 
+          className="moon"
+          animate={{ y: [0, -10, 0], scale: [1, 1.1, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          🌙
+        </motion.div>
+        <motion.h1 
+          className={`title ${glitch ? 'glitch' : ''}`}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          moonlightOS
+        </motion.h1>
+        <motion.p 
+          className="subtitle"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          v7.0 — "The Return"
+        </motion.p>
+        <motion.p 
+          className="tagline"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+        >
+          Arch-based KDE Plasma. Rolling release. NO HANDHOLDING.
+        </motion.p>
       </header>
 
       <main>
-        <section className="features">
-          <div className="feature">
-            <span className="icon">✨</span>
-            <h3>KDE Plasma</h3>
-            <p>Rice is life. Deal with it.</p>
-          </div>
-          <div className="feature">
-            <span className="icon">🏃</span>
-            <h3>Rolling Release</h3>
-            <p>Always broken, always updated.</p>
-          </div>
-          <div className="feature">
-            <span className="icon">🔧</span>
-            <h3>NO HANDHOLDING</h3>
-            <p>Figure it out yourself.</p>
-          </div>
-          <div className="feature">
-            <span className="icon">🐱</span>
-            <h3>Lucifer</h3>
-            <p>Disapproves silently.</p>
-          </div>
-        </section>
+        <motion.section 
+          className="features"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.9 }}
+        >
+          {[
+            { icon: '✨', title: 'KDE Plasma', desc: 'Rice is life. Deal with it.' },
+            { icon: '🏃', title: 'Rolling Release', desc: 'Always broken, always updated.' },
+            { icon: '🔧', title: 'NO HANDHOLDING', desc: 'Figure it out yourself.' },
+            { icon: '🐱', title: 'Lucifer', desc: 'Disapproves silently.' },
+          ].map((feature, i) => (
+            <motion.div 
+              key={i}
+              className="feature"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.1 + i * 0.1 }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <span className="icon">{feature.icon}</span>
+              <h3>{feature.title}</h3>
+              <p>{feature.desc}</p>
+            </motion.div>
+          ))}
+        </motion.section>
 
-        <section className="cta">
-          <a href="https://github.com/moonlightOS-Meow/moonlightos-meow/releases" className="btn">
+        <motion.section 
+          className="cta"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+        >
+          <motion.a 
+            href="https://github.com/moonlightOS-Meow/moonlightos-meow/releases" 
+            className="btn"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             Download ISO
-          </a>
-          <a href="https://github.com/moonlightOS-Meow/moonlightos-meow" className="btn btn-secondary">
+          </motion.a>
+          <motion.a 
+            href="https://github.com/moonlightOS-Meow/moonlightos-meow" 
+            className="btn btn-secondary"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             View on GitHub
-          </a>
-        </section>
+          </motion.a>
+        </motion.section>
 
-        <section className="info">
+        <motion.section 
+          className="info"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.7 }}
+        >
           <div className="info-box">
             <h3>Requirements</h3>
             <ul>
@@ -75,13 +127,17 @@ cd moonlightos-meow
 sudo mkarchiso -v -w /tmp/iso -o ./out releng`}
             </pre>
           </div>
-        </section>
+        </motion.section>
       </main>
 
-      <footer>
+      <motion.footer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+      >
         <p>moonlightOS v7.0 — "The Return"</p>
         <p className="small">We went back to Arch. We regret everything. 🌈💀</p>
-      </footer>
+      </motion.footer>
     </div>
   )
 }
