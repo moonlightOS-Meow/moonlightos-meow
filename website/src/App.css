@@ -362,3 +362,18 @@ footer .small {
     font-size: 1rem;
   }
 }
+
+.speed-lines {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.speed-line {
+  position: absolute;
+  left: 0;
+  width: 200px;
+  background: linear-gradient(90deg, transparent, #9b5de5, #fff, #9b5de5, transparent);
+  border-radius: 2px;
+}
