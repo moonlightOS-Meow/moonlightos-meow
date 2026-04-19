@@ -1,20 +1,29 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import './App.css'
 
 function useDevice() {
-  const [d, setD] = useState('desktop')
+  const [d, setD] = useState(null)
+  const initialized = useRef(false)
+  
   useEffect(() => {
     const check = () => {
+      if (initialized.current) return
       const w = window.innerWidth
       if (w < 768 || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) setD('mobile')
       else setD('desktop')
+      initialized.current = true
     }
     check()
     window.addEventListener('resize', check)
-    return () => window.removeEventListener('resize', check)
+    window.addEventListener('load', check)
+    return () => {
+      window.removeEventListener('resize', check)
+      window.removeEventListener('load', check)
+    }
   }, [])
-  return d
+  
+  return d || 'desktop'
 }
 
 function App() {
@@ -25,14 +34,25 @@ function App() {
 
   useEffect(() => {
     const timeline = []
+    const isMobile = device === 'mobile'
+    const baseDelay = isMobile ? 1.5 : 1
     
-    timeline.push(setTimeout(() => setIntroPhase(1), device === 'mobile' ? 50 : 100))
-    timeline.push(setTimeout(() => setIntroPhase(2), device === 'mobile' ? 400 : 800))
-    timeline.push(setTimeout(() => setIntroPhase(3), device === 'mobile' ? 700 : 1400))
+    // Phase 1: Logo enters from left
+    timeline.push(setTimeout(() => setIntroPhase(1), 100))
+    
+    // Phase 2: Bounce/jump
+    timeline.push(setTimeout(() => setIntroPhase(2), 100 + baseDelay * 500))
+    
+    // Phase 3: Glow
+    timeline.push(setTimeout(() => setIntroPhase(3), 100 + baseDelay * 1000))
+    
+    // Phase 4: Jump DOWN to reveal (not just fade)
     timeline.push(setTimeout(() => {
       setIntroPhase(4)
-      setTimeout(() => setShowIntro(false), device === 'mobile' ? 300 : 600)
-    }, device === 'mobile' ? 1200 : 2500))
+    }, 100 + baseDelay * 1800))
+    
+    // Phase 5: Show website
+    timeline.push(setTimeout(() => setShowIntro(false), 100 + baseDelay * 2200))
     
     return () => timeline.forEach(t => clearTimeout(t))
   }, [device])
@@ -47,31 +67,7 @@ function App() {
     }
   }, [showIntro])
 
-  const logoVariants = {
-    hidden: { x: '-150%', scale: device === 'mobile' ? 0.3 : 0.5, opacity: 0 },
-    center: { 
-      x: 0, 
-      scale: device === 'mobile' ? 1 : 1.2, 
-      opacity: 1,
-      transition: { duration: device === 'mobile' ? 0.3 : 0.5, ease: [0.68, -0.55, 0.265, 1.55] }
-    },
-    bounce: {
-      y: [0, device === 'mobile' ? -40 : -80, 0],
-      scale: [device === 'mobile' ? 1 : 1.2, device === 'mobile' ? 1.1 : 1.3, device === 'mobile' ? 1 : 1.1, device === 'mobile' ? 1.05 : 1.15],
-      transition: { duration: device === 'mobile' ? 0.3 : 0.5, times: [0, 0.3, 0.6, 1] }
-    },
-    glow: {
-      scale: [device === 'mobile' ? 1.05 : 1.15, device === 'mobile' ? 1.1 : 1.2, device === 'mobile' ? 1.05 : 1.15],
-      filter: ['drop-shadow(0 0 15px #9b5de5)', 'drop-shadow(0 0 25px #9b5de5)', 'drop-shadow(0 0 15px #9b5de5)'],
-      transition: { duration: 0.3, repeat: Infinity }
-    },
-    exit: {
-      y: 80,
-      opacity: 0,
-      scale: 0.6,
-      transition: { duration: 0.3 }
-    }
-  }
+  const isMobile = device === 'mobile'
 
   return (
     <>
@@ -85,31 +81,32 @@ function App() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: device === 'mobile' ? '20px' : '0',
+            padding: isMobile ? '20px' : '0',
           }}
           initial={{ opacity: 1 }}
-          animate={{ opacity: introPhase >= 4 ? 0 : 1 }}
-          transition={{ duration: 0.4 }}
+          animate={{ opacity: introPhase >= 5 ? 0 : 1 }}
+          transition={{ duration: 0.6 }}
         >
-          {introPhase >= 1 && introPhase < 3 && (
+          {introPhase >= 1 && introPhase < 4 && (
             <div className="speed-lines">
-              {[...Array(device === 'mobile' ? 4 : 8)].map((_, i) => (
+              {[...Array(isMobile ? 4 : 8)].map((_, i) => (
                 <motion.div
                   key={i}
                   className="speed-line"
-                  initial={{ x: -150, opacity: 0 }}
+                  initial={{ x: isMobile ? -100 : -200, opacity: 0 }}
                   animate={{ 
-                    x: [null, device === 'mobile' ? 200 : 400], 
+                    x: [null, isMobile ? 150 : 350], 
                     opacity: [0, 1, 0] 
                   }}
                   transition={{ 
-                    duration: device === 'mobile' ? 0.25 : 0.4, 
-                    delay: i * (device === 'mobile' ? 0.08 : 0.05),
+                    duration: isMobile ? 0.4 : 0.6, 
+                    delay: i * (isMobile ? 0.1 : 0.06),
                     ease: 'easeOut'
                   }}
                   style={{
-                    top: `${25 + i * (device === 'mobile' ? 15 : 10)}%`,
+                    top: `${20 + i * (isMobile ? 18 : 10)}%`,
                     height: 1 + Math.random() * 2,
+                    width: isMobile ? 80 : 150,
                   }}
                 />
               ))}
@@ -118,25 +115,44 @@ function App() {
 
           <motion.div
             style={{
-              fontSize: device === 'mobile' ? 'clamp(2.5rem, 10vw, 4rem)' : 'clamp(4rem, 15vw, 10rem)',
+              fontSize: isMobile ? 'clamp(2rem, 12vw, 3.5rem)' : 'clamp(3rem, 18vw, 8rem)',
               fontWeight: 900,
               background: 'linear-gradient(135deg, #fff 0%, #9b5de5 30%, #f472b6 60%, #00f0ff 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              letterSpacing: device === 'mobile' ? '-1px' : '-3px',
+              letterSpacing: isMobile ? '-1px' : '-2px',
               cursor: 'default',
               userSelect: 'none',
               textAlign: 'center',
+              position: 'relative',
+              zIndex: 10,
             }}
-            initial="hidden"
+            initial={{ x: '-120%', scale: 0.4, opacity: 0 }}
             animate={
-              introPhase === 1 ? 'center' :
-              introPhase === 2 ? 'bounce' :
-              introPhase === 3 ? 'glow' :
-              'exit'
+              introPhase === 1 
+                ? { x: 0, scale: isMobile ? 0.9 : 1.1, opacity: 1, transition: { duration: 0.5, ease: [0.68, -0.55, 0.265, 1.55] } }
+                : introPhase === 2
+                ? { 
+                    y: [0, -isMobile ? 30 : 60, 0], 
+                    scale: [isMobile ? 0.9 : 1.1, isMobile ? 1 : 1.2, isMobile ? 0.9 : 1.1, isMobile ? 0.95 : 1.15], 
+                    transition: { duration: 0.5, times: [0, 0.3, 0.6, 1] }
+                  }
+                : introPhase === 3
+                ? { 
+                    scale: [isMobile ? 0.95 : 1.15, isMobile ? 1 : 1.2, isMobile ? 0.95 : 1.15],
+                    filter: ['drop-shadow(0 0 10px #9b5de5)', 'drop-shadow(0 0 25px #9b5de5)', 'drop-shadow(0 0 10px #9b5de5)'],
+                    transition: { duration: 0.4, repeat: Infinity }
+                  }
+                : introPhase >= 4
+                ? { 
+                    y: isMobile ? 200 : 400, 
+                    opacity: 0,
+                    scale: 0.5,
+                    transition: { duration: 0.5, ease: 'easeIn' }
+                  }
+                : {}
             }
-            variants={logoVariants}
           >
             moonlightOS
           </motion.div>
@@ -144,14 +160,18 @@ function App() {
           <motion.div
             style={{
               position: 'absolute',
-              bottom: device === 'mobile' ? '15%' : '20%',
-              fontSize: device === 'mobile' ? 'clamp(0.8rem, 3vw, 1.2rem)' : 'clamp(1rem, 4vw, 2rem)',
+              bottom: isMobile ? '12%' : '18%',
+              fontSize: isMobile ? 'clamp(0.7rem, 3vw, 1rem)' : 'clamp(0.9rem, 3vw, 1.5rem)',
               color: '#9b5de5',
               fontWeight: 600,
+              zIndex: 10,
             }}
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: introPhase >= 2 ? 1 : 0, y: 0 }}
-            transition={{ delay: device === 'mobile' ? 0.2 : 0.3 }}
+            animate={{ 
+              opacity: introPhase >= 2 ? [0, 1, 1, 0] : 0, 
+              y: 0,
+              transition: { duration: 0.3 }
+            }}
           >
             v7.0 — "The Return"
           </motion.div>
