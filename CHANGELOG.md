@@ -3,6 +3,46 @@
 
 ---
 
+## [V7.0] — 2026-04-19 — "THE RETURN" (Arch + KDE Edition)
+
+### Added
+- Arch base because we never learn
+- KDE Plasma desktop — rice is life, deal with it
+- Vite + React website in website/
+- archiso profile in releng/
+- SDF (Software Distribution Format) is not here, that's S3RLINUX's thing
+- New website. Hopefully doesn't break. Probably will.
+
+### Changed
+- Basically everything. v6 was Debian. v7 is Arch. Cycle of suffering continues.
+- ISO now includes a desktop. The "NO DESKTOP" era is over. We became the thing we swore to destroy.
+- More commits because we crave the green squares
+
+### Fixed
+- The void where v5 used to be (we deleted it, oops)
+- Our collective decision-making skills (still broken)
+
+### Removed
+- "NO DESKTOP" philosophy (hypocrites? maybe. desktop enjoyers? absolutely.)
+- The ability to say "we don't use Arch" (we use Arch. again. forever.)
+- Our dignity (spent on commit messages)
+
+### Known issues
+- KDE will break. Eventually. That's the feature.
+- Arch wiki loads slow. Always has been.
+- AUR installs too easily. Suspicious.
+- We will regret this. Eventually.
+
+### Cries for help during this version
+- "WHY DID WE GO BACK TO ARCH"
+- "KDE IS HEAVY BUT IT LOOKS PRETTY"
+- "archiso is actually not that bad"
+- "we created so many legacy branches"
+- "v5 is gone and we can't bring it back"
+- "S3RLINUX is doing better than us and we're jealous"
+
+---
+
 ## [V6.0] — 2026-04-01 — "LUCYFER'S RESURRECTION" (Debian Edition)
 
 ### Added

@@ -1,4 +1,4 @@
-# Contributing to moonlightOS Meow v6.0 — Debian Edition
+# Contributing to moonlightOS v7.0 — Arch + KDE Edition
 
 ## Don't.
 
@@ -10,7 +10,7 @@ Just don't.
 
 ## Okay fine, if you REALLY want to contribute
 
-You want to contribute to a minimal Debian-based live ISO built by someone clearly having a breakdown and validated by a tuxedo cat (he/him) who actively resents this project's existence?
+You want to contribute to an Arch-based rolling release distro with KDE Plasma, built by someone who can't commit to a single base distribution and validated by a tuxedo cat (he/him) who actively resents this project's existence?
 
 That's... bold. Concerning, but bold.
 
@@ -20,35 +20,34 @@ That's... bold. Concerning, but bold.
 
 1. **Fork the repo** (this is where your first mistake happens)
 2. **Make your changes** (test them, or don't. Your funeral.)
-3. **Stay on meow-debian branch** (seriously, don't mess with naming)
-4. **Open a Pull Request** (Lucyfer will judge it silently)
-5. **Wait** (Lucyfer is probably napping)
-6. **Wait more** (Lucyfer is definitely napping)
-7. **Give up** (Lucyfer knocked the PR off the desk)
+3. **Stay on v7.0 branch** (seriously, don't mess with naming)
+4. **Open a Pull Request** (Lucifer will judge it silently)
+5. **Wait** (Lucifer is probably napping)
+6. **Wait more** (Lucifer is definitely napping)
+7. **Give up** (Lucifer knocked the PR off the desk)
 
 ---
 
 ## Contribution guidelines
 
-- **DO NOT** remove Lucyfer's face from the desktop. That's a war crime and also impossible he'll sabotage it.
-- **DO NOT** add desktop environments we didn't explicitly ask for. live-build is annoying enough.
-- **DO NOT** push to master. Use meow-debian. This is not negotiable.
-- **DO NOT** ask why Debian. We have nothing left to explain.
-- **DO** report actual bugs. Include proof. Screenshots. Coffee receipts. Whatever.
-- **DO** test on Debian 13 Trixie or later. If it breaks on Debian 12, that's your problem.
-- **DO** leave Lucyfer (he/him) alone. He's judging your code choices in silence.
-- **DO NOT** touch the build scripts unless you've read live-build docs. All of them. Yes, all.
+- **DO NOT** remove Lucifers face from anything. War crime.
+- **DO NOT** add desktop environments we didn't explicitly ask for. archiso is annoying enough.
+- **DO NOT** push to legacy branches. Use v7.0. This is not negotiable.
+- **DO NOT** ask why Arch. We have nothing left to explain. We already did this in v4, v5, v6, and now v7.
+- **DO** report actual bugs. Include proof. Screenshots. Energy drink receipts. Whatever.
+- **DO** test on Arch Linux (latest). If it breaks on something else, that's your problem.
+- **DO** leave Lucifer (he/him) alone. He's judging your code choices in silence.
+- **DO NOT** touch the archiso profile unless you've read archiso docs. All of them. Yes, all.
 
 ---
 
 ## Code of Conduct
 
 - Be competent or shut up
-- Makka Pakka is not changing (this is not optional)
 - NoVa V3 stays dead (mandatory)
-- Lucyfer's silence is consent. Maybe. Probably not.
-- Windows Edition is shameful but canonical
-- Debian will stay. We're not changing again.
+- Lucifers silence is consent. Maybe. Probably not.
+- We went back to Arch. We regret nothing. We regret everything.
+- S3RLINUX is our sibling project. Don't be jealous.
 - If your PR works on 3 different systems, it might get merged
 - If it breaks on one system, that's your failure, not ours
 
@@ -57,17 +56,32 @@ That's... bold. Concerning, but bold.
 ## Why your PR will be rejected
 
 - It doesn't compile
-- It requires packages not in Debian 13
-- Lucyfer walked across the keyboard mid-review
+- It requires packages not in Arch repos + AUR
+- Lucifer walked across the keyboard mid-review
 - The commit message was written at 3am and it shows
 - NoVa V3 energy detected (730+ commits, 0 bootable ISOs)
 - You tried to change the ISO naming scheme
 - It depends on non-free repositories
-- You asked "why" instead of just accepting it
-- You edited master instead of meow-debian
-- Lucyfer is having a worse day than usual
+- You asked "why Arch again" instead of just accepting it
+- You edited a legacy branch instead of v7.0
+- Lucifer is having a worse day than usual
+
+---
+
+## Building locally
+
+```bash
+# Install archiso
+sudo pacman -S archiso
+
+# Build
+sudo mkarchiso -v -w /tmp/iso -o ./out releng
+```
+
+Good luck. You'll need it.
 
 ---
 
 *"I ALWAYS COME BACK" — Ash, 2026*
 *This project is maintained by one person having a complete crisis, one disapproving cat (he/him), and increasingly questionable life choices.*
+*Now with KDE Plasma because we sold our soul to rice.*

@@ -1,103 +1,129 @@
-# moonlightOS Meow v6.0 "Lucyfer's Resurrection" 🐱☠️
-### *"He came back. He always comes back. Unfortunately."*
+# moonlightOS v7.0 — "The Return" 🌙
 
-> ⚠️ Lucyfer (he/him) has filed complaints #8001-#8847. We ignore him. The distro exists anyway.
-> NoVa V3 is still dead. Good riddance. This is its spiritual successor. Yeah, we're using Debian. Deal with it.
-
-**Built by Ash. Reluctantly named by Lucyfer. Powered by spite and poor life choices. Based on Debian 13 Trixie because we got tired of Arch's nonsense.**
+> "NO DESKTOP. NO HANDHOLDING."
+> — Wait, we actually have a desktop now. Deal with it.
 
 ---
 
 ## What is this?
 
-moonlightOS Meow v6.0 is a minimal Debian 13 (Trixie) based live ISO.
-No desktop environment. No bloat. **No bullshit.**
-Just a clean, minimal system with the tools you need and absolutely nothing else.
-
-Pick your own desktop. Rice your own rice. If you actually know what you're doing.
-If you don't — honestly? Maybe just stick with Windows. This isn't for you. Or try the Windows Edition if you want to commit to the bit.
-
-- **Base:** Debian 13 "Trixie"
-- **Desktop:** None (bring your own)
-- **Installer:** Debian installer (not Calamares. never again.)
-- **Philosophy:** Minimal. Chaos. Lucyfer approved (reluctantly).
-- **Named by:** Lucyfer (he/him, under protest)
-- **NoVa V3:** still dead
+**moonlightOS v7.0** is a rolling-release Arch-based Linux distribution with KDE Plasma desktop.
+Built out of spite, caffeine, and the burning desire to not use Windows.
 
 ---
 
-## Why Debian?
+## Features
 
-- **Arch?** Boring. Predictable. Same recycled takes.
-- **Fedora/Nobara?** Gave us genuine PTSD. v4.0 was a mistake. We don't talk about it.
-- **Ubuntu?** Please no.
-- **Debian 13 Trixie?** Stable. Doesn't whine. Actually works. Revolutionary, we know.
-- **live-build?** Shockingly not garbage for once.
-- **Lucyfer's opinion?** He said "mrrp" at 3 AM. We took it as approval because he was already gone.
-
----
-
-## Download The ISO (Finally, A Normal Section)
-
-### Pre-Built ISO (For People Who Value Time)
-
-**GitHub Releases** — Because it's free, integrated, and doesn't require a MEGA account. Plus our ISO is actually slim like we said.
-
-🔗 **[Download from GitHub Releases](https://github.com/moonlightOS-Meow/moonlightos-meow/releases)**
-
-- **Size:** ~800MB - 1.5GB (minimal as fuck, remember?)
-- **SHA256:** Included with every release. Verify your shit.
-- **Why GitHub Releases?** It's under 2GB. It's free. It's right here. No MEGA account needed.
-
-> ⚠️ **ALWAYS DOWNLOAD THE LATEST RELEASE!** There's also a **Windows Edition** ISO floating around. Make sure you're grabbing **moonlightOS Meow v6.0 "Lucyfer's Resurrection"** (Debian-based, minimal, no DE) and not the Windows Edition unless that's what you actually want. They're different things. Don't @ us.
-
-> 🚨 **DOWNLOADED THE WINDOWS EDITION BY MISTAKE?** If you installed that ugly ISO and now you're here asking for help — **we don't support that.** That's not this project. If you installed it: **DELETE IT. FORMAT THE FUCKING DRIVE.** Start over with this one. We warned you. They're not compatible. We don't have the tools or the patience to fix Windows Edition mistakes.
-
-*ISO built via GitHub Actions, uploaded to Releases automatically (or manually, depending on how lazy we're feeling).*
+- ✨ **KDE Plasma** - Because rice is life
+- 🏃 **Rolling Release** - Always broken, always updated
+- 🔧 **NO HANDHOLDING** - Figure it out yourself
+- 🐱 **Vergil stan energy** - Mandatory
+- 💀 **Chaos included** - Free of charge
 
 ---
 
-## Building the ISO Yourself (Why Though?)
+## Installation
 
-### GitHub Actions (the smart way)
-Go to Actions. Hit the **Build moonlightOS Meow v6.0 ISO** button. Wait. Don't touch anything.
-Customize packages and compression if you're feeling adventurous.
-ISO drops in 7 days as a downloadable artifact. You're welcome.
+1. Download ISO from Releases
+2. Flash to USB (use Ventoy, Rufus, or dd)
+3. Boot, install, vibe
 
-### Local build (Debian/Ubuntu only — no, really)
-You'll need Debian or Ubuntu. This won't work on your precious MacBook.
+---
+
+## What's Included
+
+- KDE Plasma Desktop
+- Arch base (obviously)
+- Some stuff we forgot to remove
+- Your expectations (subverted)
+
+---
+
+## Requirements
+
+- x86_64 CPU (sorry, ARM kids)
+- 4GB RAM minimum (8GB recommended)
+- 20GB storage
+- A tolerance for suffering
+
+---
+
+## Building the ISO
+
 ```bash
-sudo apt install live-build
+# Install archiso
+sudo pacman -S archiso
+
+# Clone this repo
 git clone https://github.com/moonlightOS-Meow/moonlightos-meow
 cd moonlightos-meow
-git checkout meow-debian
-cd live-build
-sudo lb build
+git checkout v7.0
+
+# Build
+sudo mkarchiso -v -w /tmp/iso -o ./out releng
 ```
-Go make coffee. This takes a while. Don't ask for a progress bar.
 
 ---
 
-## Version Lore
+## Why v7?
 
-| Version | Status | Notes |
-|---|---|---|
-| AshOS v1 | 💀 DEAD | Kubuntu remaster, born from chaos |
-| Phoenix v1-v2 | 💀 ARCHIVED | rm -rf survivor, GRUB trauma |
-| NoVa V3 | 💀 DEAD | 730+ commits, 0 ISOs, legend |
-| Meow v4.0 | 💀 RIP | Fedora era, kickstart hell |
-| Meow v5.0 | ✅ ALIVE | Arch, Openbox, villain arc |
-| Windows Edition | 🪟 ACTIVE | NTLite, Makka Pakka, spite |
-| **Meow v6.0** | ☠️ **YOU ARE HERE** | Debian, minimal, resurrection |
+v6 was Debian. v5 was dead Arch. v4 was i3 config hell. v3 was lost to time.
+v7 is our attempt at Actually Making Something Work (TM).
+
+We failed. But we have KDE now, so it's fine.
+
+---
+
+## FAQ
+
+**Q: Does this have a desktop?**
+A: Yes, KDE Plasma. Deal with it.
+
+**Q: Is this Arch?**
+A: Yes. We didn't learn from S3RLINUX. We never learn.
+
+**Q: Is it stable?**
+A: Define stable. Define stable. Define stable.
+
+**Q: Where's the wiki?**
+A: Check GitHub. Maybe. Probably not.
+
+**Q: Will this destroy your data?**
+A: Maybe. Make backups.
+
+---
+
+## Version History
+
+| Version | Base | Desktop | Status |
+|---------|------|---------|--------|
+| v1 (AshOS) | Kubuntu | KDE | 💀 DEAD |
+| v2 (Phoenix) | Arch | ?? | 💀 ARCHIVED |
+| v3 (NoVa) | Fedora | None | 💀 DEAD |
+| v4 | Fedora | i3 | 🏷️ legacy-v4 |
+| v5 | Arch | Openbox | 🏷️ legacy-v6 |
+| v6 | Debian | None | 🏷️ legacy-meow-debian |
+| v6 Windows | Windows 11 | GlazeWM | 🏷️ legacy-ntlite |
+| **v7** | **Arch** | **KDE Plasma** | **✅ YOU ARE HERE** |
+
+---
+
+## Credits
+
+- **Ash** - Main gremlin
+- **Lucifer** - Disapproves, but contributes anyway
+- **Arch Wiki** - We read it once
+- **Stack Overflow** - Copy-paste specialists
+- **You** - For being here. Why.
 
 ---
 
 ## License
 
-WTFPL v3 (Remastered Edition) — See [LICENSE.md](LICENSE.md)
-Do whatever you want. Lucyfer doesn't care. He's sleeping. Probably plotting revenge.
+[WTFPL](LICENSE.md) — Do What The Fuck You Want To. We don't care.
 
 ---
 
-*"I ALWAYS COME BACK" — Ash, 2026*
-*Lucyfer's Resurrection. For real this time. Probably. Send help. 🌙🐱☠️*
+*moonlightOS v7.0 — "The Return"*
+*We came back. We're sorry.*
+*🐱🌙*
